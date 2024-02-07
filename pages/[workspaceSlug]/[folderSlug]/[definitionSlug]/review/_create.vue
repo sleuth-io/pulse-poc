@@ -2,6 +2,7 @@
 const reviewDate = '2021-01-01';
 
 const route = useRoute('workspaceSlug-folderSlug-definitionSlug-review-_create')
+const router = useRouter()
 
 const db = useState('db')
 const workspace = db.value.workspaces.find((workspace) => workspace.slug === route.params.workspaceSlug)
@@ -9,11 +10,13 @@ const definition = workspace.folders.find((folder) => folder.slug === route.para
 
 const value = ref<Record<string, number>>({})
 
-function createReview() {
+async function createReview() {
   definition.reviews.push({
     date: reviewDate,
     values: value,
   });
+
+  await router.push({ name: 'workspaceSlug-folderSlug-definitionSlug' })
 }
 </script>
 

@@ -6,6 +6,11 @@
     }" rel="noopener">
       <Button label="Edit" icon="pi pi-pencil" />
     </NuxtLink>
+    <NuxtLink :to="{
+      name: 'workspaceSlug-folderSlug-definitionSlug-review-_create',
+    }" rel="noopener">
+      <Button label="Create new review" icon="pi pi-file" />
+    </NuxtLink>
     <div class="mt-6">
       <h2 class="text-xl">Reviews:</h2>
     </div>
