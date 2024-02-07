@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-0 w-72 bg-surface-200 dark:bg-surface-600">
+  <div class="flex flex-col flex-0 w-72 bg-surface-200 dark:bg-surface-600">
     <div class="p-4">
       <h1 class="text-xl font-bold">Workspaces</h1>
       <ul>
@@ -27,7 +27,9 @@
 
               <ul>
                 <li
-                  v-for="def in getUniqueReviewDefinitions(folder.reviewDefinitions)"
+                  v-for="def in getUniqueReviewDefinitions(
+                    folder.reviewDefinitions
+                  )"
                   :key="def.slug"
                   class="pl-2"
                 >
@@ -44,13 +46,11 @@
             </li>
           </ul>
         </li>
-        <li class="pl-2 py-1">
-          <NuxtLink to="/database">
-          <i class="pi pi-database mr-2" />Database
-          </NuxtLink>
-        </li>
       </ul>
     </div>
+    <NuxtLink to="/database" class="mt-auto p-4">
+      <i class="pi pi-database mr-2" />Database
+    </NuxtLink>
   </div>
 </template>
 
@@ -58,13 +58,17 @@
 const $db = useState("db");
 
 function getUniqueReviewDefinitions(reviewDefinitions) {
-  const uniqueSlugs = new Set()
-  reviewDefinitions.forEach(rd => uniqueSlugs.add(rd.slug))
+  const uniqueSlugs = new Set();
+  reviewDefinitions.forEach((rd) => uniqueSlugs.add(rd.slug));
 
-  return Array.from(uniqueSlugs).map(slug => {
-    const definitionsWithSlug = reviewDefinitions.filter(rd => rd.slug === slug)
-    const sorted = definitionsWithSlug.sort((a, b) => a.version - b.version).reverse()
-    return sorted[0]
-  })
+  return Array.from(uniqueSlugs).map((slug) => {
+    const definitionsWithSlug = reviewDefinitions.filter(
+      (rd) => rd.slug === slug
+    );
+    const sorted = definitionsWithSlug
+      .sort((a, b) => a.version - b.version)
+      .reverse();
+    return sorted[0];
+  });
 }
 </script>
