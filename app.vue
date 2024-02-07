@@ -8,6 +8,7 @@ const database = useState("db", () => ({
   workspaces: [
     {
       name: "Pulse engineering",
+      slug: "pulse-engineering",
       folders: [
         {
           name: "Frontend",
