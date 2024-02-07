@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2 class="text-xl">Review:</h2>
-    <div>{{ $route.params.reviewSlug }}</div>
+    <div>Review: {{ route.params.reviewSlug }}</div>
+    <NuxtPage />
   </div>
 </template>
 
 <script setup lang="ts">
-const $route = useRoute();
+const route = useRoute('workspaceSlug-folderSlug-definitionSlug-review-reviewSlug')
 </script>
