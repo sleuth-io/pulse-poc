@@ -69,7 +69,7 @@ const database = useState("db", () => ({
 <template>
   <div class="bg-surface-50 dark:bg-surface-800 dark:text-white flex h-screen">
     <Sidebar />
-    <div class="flex flex-1">
+    <div class="flex-1">
       <NuxtPage />
     </div>
   </div>
