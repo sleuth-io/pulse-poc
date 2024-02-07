@@ -5,8 +5,9 @@ const route = useRoute('workspaceSlug-folderSlug-definitionSlug-review-_create')
 const router = useRouter()
 
 const db = useState('db')
+
 const workspace = db.value.workspaces.find((workspace) => workspace.slug === route.params.workspaceSlug)
-const definition = workspace.folders.find((folder) => folder.slug === route.params.folderSlug).reviewDefinitions.find((definition) => definition.slug === route.params.definitionSlug)
+const definition = workspace.folders.find((folder) => folder.slug === route.params.folderSlug).reviewDefinitions.sort((a, b) => b.version - a.version).find((definition) => definition.slug === route.params.definitionSlug)
 
 const value = ref<Record<string, number>>({})
 

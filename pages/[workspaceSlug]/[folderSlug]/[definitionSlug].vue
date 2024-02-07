@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>Definition: {{ route.params.definitionSlug }}</div>
     <NuxtPage />
   </div>
 </template>
