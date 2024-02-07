@@ -13,6 +13,7 @@ const value = ref<Record<string, number>>({})
 
 async function createReview() {
   definition.reviews.push({
+    slug: `${definition.slug}-${reviewDate}`,
     date: reviewDate,
     values: value,
   });
