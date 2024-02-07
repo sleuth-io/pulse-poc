@@ -19,7 +19,10 @@ function getDefinition() {
     rd => rd.slug === route.params.definitionSlug
   ).sort((a, b) => b.version - a.version)
 
-  return reviewDefinitions[0]
+  const latestReviewDefinition = JSON.parse(JSON.stringify(reviewDefinitions[0]))
+  latestReviewDefinition.reviews = []
+
+  return latestReviewDefinition
 }
 
 const definition = ref(JSON.parse(JSON.stringify(getDefinition())))
