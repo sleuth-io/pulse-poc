@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-6">
+  <div>
     <h2 class="text-xl">Review:</h2>
     <div>{{ $route.params.reviewSlug }}</div>
   </div>

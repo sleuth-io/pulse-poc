@@ -1,10 +1,5 @@
 <script setup lang="ts">
-const navigationItems = [
-  { label: "Home", route: "/" },
-  { label: "Subpage", route: "/subpage" },
-];
-
-const database = useState("db", () => ({
+useState("db", () => ({
   workspaces: [
     {
       name: "Pulse engineering",
@@ -40,7 +35,8 @@ const database = useState("db", () => ({
                   },
                 },
               ],
-            },{
+            },
+            {
               name: "Monthly DevEx",
               recurrence: "monthly",
               startDate: "2021-01-01",
@@ -69,7 +65,7 @@ const database = useState("db", () => ({
 <template>
   <div class="bg-surface-50 dark:bg-surface-800 dark:text-white flex h-screen">
     <Sidebar />
-    <div class="flex-1">
+    <div class="flex-1 py-4 px-8">
       <NuxtPage />
     </div>
   </div>
