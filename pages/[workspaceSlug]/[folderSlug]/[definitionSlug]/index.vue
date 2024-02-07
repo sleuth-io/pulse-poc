@@ -6,8 +6,9 @@
         name: 'workspaceSlug-folderSlug-definitionSlug-_edit',
       }"
       rel="noopener"
+      class="mr-3"
     >
-      <Button label="Edit" icon="pi pi-pencil" />
+      <Button label="Edit definition" icon="pi pi-pencil" />
     </NuxtLink>
     <NuxtLink
       :to="{
@@ -29,7 +30,7 @@
           .reviews"
         :key="review.slug"
         :to="`/${params.workspaceSlug}/${params.folderSlug}/${params.definitionSlug}/review/${review.slug}`"
-        class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center"
+        class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center mr-3"
       >
         <i class="pi pi-check mr-2" />
         {{ review.slug }}

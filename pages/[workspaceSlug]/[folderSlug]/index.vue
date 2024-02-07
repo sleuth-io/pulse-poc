@@ -9,7 +9,7 @@
           .folders.find((f) => f.slug === params.folderSlug).reviewDefinitions"
         :key="def.slug"
         :to="`/${params.workspaceSlug}/${params.folderSlug}/${def.slug}`"
-        class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center"
+        class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center mr-3"
       >
         <i class="pi pi-file mr-2" />
         {{ def.name }}

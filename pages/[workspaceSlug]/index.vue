@@ -9,7 +9,7 @@
         ).folders"
         :key="folder.slug"
         :to="`/${params.workspaceSlug}/${folder.slug}`"
-        class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center"
+        class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center mr-3"
       >
         <i class="pi pi-folder mr-2" />
         {{ folder.name }}
