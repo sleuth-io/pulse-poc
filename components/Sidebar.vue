@@ -44,6 +44,11 @@
             </li>
           </ul>
         </li>
+        <li class="pl-2 py-1">
+          <NuxtLink to="/database">
+          <i class="pi pi-database mr-2" />Database
+          </NuxtLink>
+        </li>
       </ul>
     </div>
   </div>
