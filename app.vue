@@ -12,6 +12,7 @@ const database = useState("db", () => ({
       folders: [
         {
           name: "Frontend",
+          slug: "frontend",
           reviewDefinitions: [
             {
               name: "Weekly DORA",

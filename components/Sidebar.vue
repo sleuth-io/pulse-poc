@@ -10,6 +10,39 @@
             active-class="text-underline"
             >{{ workspace.name }}</router-link
           >
+          <ul>
+            <li
+              v-for="folder in workspace.folders"
+              :key="folder.name"
+              class="pl-2"
+            >
+              <router-link
+                :to="`/${workspace.slug}/${folder.slug}`"
+                class="block py-1"
+                active-class="text-underline"
+              >
+                <i class="pi pi-folder mr-2" />
+                <span>{{ folder.name }}</span>
+              </router-link>
+
+              <ul>
+                <li
+                  v-for="def in folder.reviewDefinitions"
+                  :key="def.slug"
+                  class="pl-2"
+                >
+                  <router-link
+                    :to="`/${workspace.slug}/${folder.slug}/${def.slug}`"
+                    class="block py-1"
+                    active-class="text-underline"
+                  >
+                    <i class="pi pi-file mr-2" />
+                    <span>{{ def.name }}</span>
+                  </router-link>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
