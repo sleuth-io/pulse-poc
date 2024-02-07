@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const route = useRoute('workspaceSlug-folderSlug-definitionSlug')
+const route = useRoute('workspaceSlug-folderSlug-definitionSlug-_edit')
 
 
 const reviewDefinitionSlug = 'weekly-dora'
@@ -9,16 +9,17 @@ const database = useState('db', () => null)
 
 function getDefinition() {
   const workspace = database.value?.workspaces.find(
-    withScopeId => withScopeId.slug === route.params.workspaceSlug
+    ws => ws.slug === route.params.workspaceSlug
   )
   const folder = workspace.folders.find(
     fd => fd.slug === route.params.folderSlug
   )
-  const reviewDefinition = folder.reviewDefinitions.find(
-    rd => rd.slug === route.params.definitionSlug
-  )
 
-  return reviewDefinition
+  const reviewDefinitions = folder.reviewDefinitions.filter(
+    rd => rd.slug === route.params.definitionSlug
+  ).sort((a, b) => b.version - a.version)
+
+  return reviewDefinitions[0]
 }
 
 const definition = ref(JSON.parse(JSON.stringify(getDefinition())))
@@ -34,6 +35,7 @@ function addField() {
 function save() {
   definition.value.version++
   database.value?.workspaces[0].folders[0].reviewDefinitions.push(definition.value)
+  navigateTo({name: 'workspaceSlug-folderSlug-definitionSlug' })
 }
 
 </script>
