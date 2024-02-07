@@ -1,7 +1,11 @@
 <template>
   <div>
     <div>Definition: {{ params.definitionSlug }}</div>
-
+    <NuxtLink :to="{
+      name: 'workspaceSlug-folderSlug-definitionSlug-_edit',
+    }" rel="noopener">
+      <Button label="Edit" icon="pi pi-pencil" />
+    </NuxtLink>
     <div class="mt-6">
       <h2 class="text-xl">Reviews:</h2>
     </div>
