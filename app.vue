@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const navigationItems = [
-  { label: 'Home', route: '/' },
-  { label: 'Subpage', route: '/subpage' },
-]
+  { label: "Home", route: "/" },
+  { label: "Subpage", route: "/subpage" },
+];
 
-const database = useState('db', () => ({
+const database = useState("db", () => ({
   workspaces: [
     {
       name: "Pulse engineering",
@@ -43,27 +43,18 @@ const database = useState('db', () => ({
       ],
     },
   ],
-}))
+}));
 </script>
 
 <template>
-  <div class="bg-surface-50 dark:bg-surface-800 dark:text-white h-screen flex flex-col">
-    <div>
-      {{ database }}
-      <Menubar :model="navigationItems" class="mb-4">
-        <template #item="{ item, props }">
-          <NuxtLink v-slot="{ href, navigate }" :to="item.route" custom>
-            <a v-ripple :href="href" v-bind="props.action" @click="navigate">
-              {{ item.label }}
-            </a>
-          </NuxtLink>
-        </template>
-      </Menubar>
+  <div class="bg-surface-50 dark:bg-surface-800 dark:text-white flex h-screen">
+    <Sidebar />
+    <div class="flex flex-1">
       <NuxtPage />
     </div>
   </div>
 </template>
 
 <style>
-@import "./assets/css/base.css"
+@import "./assets/css/base.css";
 </style>
