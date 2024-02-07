@@ -23,7 +23,9 @@ function save() {
 
 </script>
 <template>
-  <div class="m-auto w-[80vw]">
+  <div class="m-auto w-4/5">
+    <InputText v-model="definition.name"></InputText>
+    <hr class="my-8" />
     <Card v-for="field in definition.schema" class="mt-4">
       <template #content>
         <InputText v-model="field.title"></InputText></template>
