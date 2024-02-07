@@ -1,5 +1,11 @@
 <script setup lang="ts">
-useState("db", () => ({
+const navigationItems = [
+  { label: 'Home', route: '/' },
+  { label: 'Subpage', route: '/subpage' },
+  { label: 'Definitions', route: '/definitions' },
+]
+
+const database = useState('db', () => ({
   workspaces: [
     {
       name: "Pulse engineering",
