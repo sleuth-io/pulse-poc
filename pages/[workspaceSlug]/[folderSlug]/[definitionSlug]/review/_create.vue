@@ -20,7 +20,7 @@ const value = ref<Record<string, number>>({});
 
 async function createReview() {
   definition.reviews.push({
-    slug: `${definition.slug}-${reviewDate}`,
+    slug: `${definition.slug}-${reviewDate}-${(Math.random() + 1).toString(36).substring(7)}`,
     date: reviewDate,
     values: value,
   });
