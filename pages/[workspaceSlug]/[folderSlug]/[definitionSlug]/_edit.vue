@@ -45,9 +45,9 @@ function save() {
       <template #content>
         <InputText v-model="field.title"></InputText></template>
     </Card>
-    <Button label="+ Add field" class="mt-8" @click="addField" severity="secondary"/>
+    <Button label="Add field" icon="pi pi-plus" class="mt-8" @click="addField" severity="secondary"/>
     <hr class="mt-8">
-    <Button label="Save template" class="mt-8" @click="save"/>
+    <Button label="Save template" class="mt-8" icon="pi pi-save" @click="save"/>
 
   </div>
 </template>
