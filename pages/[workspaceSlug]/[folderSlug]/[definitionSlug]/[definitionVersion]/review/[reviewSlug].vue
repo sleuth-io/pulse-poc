@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 const $route = useRoute(
-  "workspaceSlug-folderSlug-definitionSlug-review-reviewSlug"
+  "workspaceSlug-folderSlug-definitionSlug-definitionVersion-review-reviewSlug"
 );
 const params = $route.params;
 const $db = useState("db");
@@ -31,14 +31,14 @@ const definitionSchema = computed(
     $db.value.workspaces
       .find((w) => w.slug === params.workspaceSlug)
       .folders.find((f) => f.slug === params.folderSlug)
-      .reviewDefinitions.find((d) => d.slug === params.definitionSlug).schema
+      .reviewDefinitions.find((d) => d.slug === params.definitionSlug && d.version === Number(params.definitionVersion)).schema
 );
 
 const review = computed(() =>
   $db.value.workspaces
     .find((w) => w.slug === params.workspaceSlug)
     .folders.find((f) => f.slug === params.folderSlug)
-    .reviewDefinitions.find((d) => d.slug === params.definitionSlug)
+    .reviewDefinitions.find((d) => d.slug === params.definitionSlug && d.version === Number(params.definitionVersion))
     .reviews.find((r) => r.slug === params.reviewSlug)
 );
 

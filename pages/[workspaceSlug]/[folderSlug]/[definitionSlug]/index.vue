@@ -27,7 +27,7 @@
         <NuxtLink
           v-for="review in rd.reviews"
           :key="review.slug"
-          :to="`/${params.workspaceSlug}/${params.folderSlug}/${params.definitionSlug}/review/${review.slug}`"
+          :to="`/${params.workspaceSlug}/${params.folderSlug}/${params.definitionSlug}/${rd.version}/review/${review.slug}`"
           class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center mr-3"
         >
           <i class="pi pi-check mr-2" />
