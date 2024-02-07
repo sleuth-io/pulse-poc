@@ -32,6 +32,7 @@ const database = useState("db", () => ({
               ],
               reviews: [
                 {
+                  slug: "weekly-dora-2021-01-01",
                   date: "2021-01-01",
                   values: {
                     "mttr-widget": 10,
