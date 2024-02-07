@@ -27,7 +27,7 @@
 
               <ul>
                 <li
-                  v-for="def in folder.reviewDefinitions"
+                  v-for="def in getUniqueReviewDefinitions(folder.reviewDefinitions)"
                   :key="def.slug"
                   class="pl-2"
                 >
@@ -51,4 +51,15 @@
 
 <script setup lang="ts">
 const $db = useState("db");
+
+function getUniqueReviewDefinitions(reviewDefinitions) {
+  const uniqueSlugs = new Set()
+  reviewDefinitions.forEach(rd => uniqueSlugs.add(rd.slug))
+
+  return Array.from(uniqueSlugs).map(slug => {
+    const definitionsWithSlug = reviewDefinitions.filter(rd => rd.slug === slug)
+    const sorted = definitionsWithSlug.sort((a, b) => a.version - b.version).reverse()
+    return sorted[0]
+  })
+}
 </script>

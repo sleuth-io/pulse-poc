@@ -40,6 +40,23 @@ const database = useState("db", () => ({
                   },
                 },
               ],
+            },{
+              name: "Monthly DevEx",
+              recurrence: "monthly",
+              startDate: "2021-01-01",
+              slug: "monthly-devex",
+              version: 1,
+              schema: [
+                {
+                  title: "Potato",
+                  id: "potato",
+                },
+                {
+                  title: "Tomato",
+                  id: "tomato",
+                },
+              ],
+              reviews: [],
             },
           ],
         },
