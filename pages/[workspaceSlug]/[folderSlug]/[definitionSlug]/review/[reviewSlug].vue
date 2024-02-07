@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div>Review: {{ $route.params.reviewSlug }}</div>
-    <NuxtPage />
+  <div class="mt-6">
+    <h2 class="text-xl">Review:</h2>
+    <div>{{ $route.params.reviewSlug }}</div>
   </div>
 </template>
 
