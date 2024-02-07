@@ -1,14 +1,20 @@
 <template>
   <div>
     <div>Definition: {{ params.definitionSlug }}</div>
-    <NuxtLink :to="{
-      name: 'workspaceSlug-folderSlug-definitionSlug-_edit',
-    }" rel="noopener">
+    <NuxtLink
+      :to="{
+        name: 'workspaceSlug-folderSlug-definitionSlug-_edit',
+      }"
+      rel="noopener"
+    >
       <Button label="Edit" icon="pi pi-pencil" />
     </NuxtLink>
-    <NuxtLink :to="{
-      name: 'workspaceSlug-folderSlug-definitionSlug-review-_create',
-    }" rel="noopener">
+    <NuxtLink
+      :to="{
+        name: 'workspaceSlug-folderSlug-definitionSlug-review-_create',
+      }"
+      rel="noopener"
+    >
       <Button label="Create new review" icon="pi pi-file" />
     </NuxtLink>
     <div class="mt-6">
@@ -33,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-const $route = useRoute();
+const $route = useRoute("workspaceSlug-folderSlug-definitionSlug");
 const params = $route.params;
 const $db = useState("db");
 </script>
