@@ -22,19 +22,21 @@
       <h2 class="text-xl">Reviews:</h2>
     </div>
     <template v-for="rd in sortedReviewDefinitions">
-      <div class="tw-my-4">Version: {{ rd.version }}</div>
-      <div class="flex mt-3">
-        <NuxtLink
-          v-for="review in rd.reviews"
-          :key="review.slug"
-          :to="`/${params.workspaceSlug}/${params.folderSlug}/${params.definitionSlug}/${rd.version}/review/${review.slug}`"
-          class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center mr-3"
-        >
-          <i class="pi pi-check mr-2" />
-          {{ review.slug }}
-        </NuxtLink>
+      <div v-if="rd.reviews.length">
+        <div class="tw-my-4">Version: {{ rd.version }}</div>
+        <div class="flex mt-3">
+          <NuxtLink
+            v-for="review in rd.reviews"
+            :key="review.slug"
+            :to="`/${params.workspaceSlug}/${params.folderSlug}/${params.definitionSlug}/${rd.version}/review/${review.slug}`"
+            class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center mr-3"
+          >
+            <i class="pi pi-check mr-2" />
+            {{ review.slug }}
+          </NuxtLink>
+        </div>
+        <Divider />
       </div>
-      <Divider />
     </template>
   </div>
 </template>
@@ -48,5 +50,5 @@ const sortedReviewDefinitions = $db.value.workspaces
   .find((w) => w.slug === params.workspaceSlug)
   .folders.find((f) => f.slug === params.folderSlug)
   .reviewDefinitions.filter((d) => d.slug === params.definitionSlug)
-  .sort((a, b) => b.version - a.version)
+  .sort((a, b) => b.version - a.version);
 </script>
