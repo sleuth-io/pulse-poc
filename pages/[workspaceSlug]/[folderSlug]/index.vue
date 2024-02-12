@@ -6,15 +6,15 @@
       <NuxtLink v-for="review in folder.reviews" :key="review.slug"
         :to="`/${params.workspaceSlug}/${params.folderSlug}/${review.slug}`"
         class="flex px-3 h-48 min-w-36 items-center justify-center relative" :class="{
-          'bg-green-400': review.status === 'published',
+          'bg-green-400': review.status === 'completed',
           'bg-gray-400': review.status === 'draft',
-          'bg-yellow-400': review.status === 'in-progress',
+          'bg-yellow-400': review.status === 'in-review',
         }">
         <i class="pi pi-user-edit" v-if="review.status === 'draft'" />
-        <i class="pi pi-pencil" v-if="review.status === 'in-progress'" />
-        <i class="pi pi-check-circle" v-else-if="review.status === 'published'" />
+        <i class="pi pi-pencil" v-if="review.status === 'in-review'" />
+        <i class="pi pi-check-circle" v-else-if="review.status === 'completed'" />
         <span class="ml-2">{{ params.folderSlug }} ({{ review.startDate }})</span>
-        <Button v-if="review.status === 'published'" :icon="'pi pi-copy'" class="!absolute top-0 right-0"
+        <Button v-if="review.status === 'completed'" :icon="'pi pi-copy'" class="!absolute top-0 right-0"
           @click.prevent="createDraftFrom(review)" />
       </NuxtLink>
 

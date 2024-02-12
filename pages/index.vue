@@ -1,5 +1,5 @@
 <template>
   <h1>
-    Welcome to Zombo com
+    Welcome to Pulse
   </h1>
 </template>

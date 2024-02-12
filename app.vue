@@ -17,7 +17,7 @@ interface FolderType {
 
 export interface ReviewType {
   recurrence: "weekly" | "monthly";
-  status: "draft" | "in-progress" | "published";
+  status: "draft" | "in-review" | "completed";
   startDate: string;
   slug: string;
   schema: SchemaType[];
@@ -45,53 +45,7 @@ useState<PulseType>("db", () => ({
           reviews: [
             {
               recurrence: "weekly",
-              status: "draft",
-              startDate: "2020-31-12",
-              slug: "weekly-dora-2020-31-12",
-              schema: [
-                {
-                  title: "MTTR widget",
-                  id: "mttr-widget",
-                },
-                {
-                  title: "Frequency widget",
-                  id: "frequency-widget",
-                },
-              ],
-              entry:
-              {
-                _date: null,
-                _user: null,
-                "mttr-widget": null,
-                "frequency-widget": null,
-              }
-            },
-            {
-              recurrence: "weekly",
-              startDate: "2021-01-07",
-              status: "in-progress",
-              slug: "weekly-dora-2021-01-07",
-              schema: [
-                {
-                  title: "MTTR widget",
-                  id: "mttr-widget",
-                },
-                {
-                  title: "Frequency widget",
-                  id: "frequency-widget",
-                },
-              ],
-              entry:
-              {
-                _date: "2021-01-02",
-                _user: 1,
-                "mttr-widget": 1,
-                "frequency-widget": null,
-              },
-            },
-            {
-              recurrence: "weekly",
-              status: "published",
+              status: "completed",
               startDate: "2021-01-01",
               slug: "weekly-dora-2021-01-01",
               schema: [
@@ -114,7 +68,7 @@ useState<PulseType>("db", () => ({
             },
             {
               recurrence: "weekly",
-              status: "published",
+              status: "completed",
               startDate: "2021-01-02",
               slug: "weekly-dora-2021-01-02",
               schema: [
@@ -137,7 +91,7 @@ useState<PulseType>("db", () => ({
             },
             {
               recurrence: "weekly",
-              status: "published",
+              status: "completed",
               startDate: "2021-01-03",
               slug: "weekly-dora-2021-01-03",
               schema: [

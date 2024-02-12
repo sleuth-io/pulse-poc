@@ -5,7 +5,9 @@ const db = useDatabase()
 <template>
   <div class="flex flex-col flex-0 w-72 bg-surface-200 dark:bg-surface-600">
     <div class="p-4">
-      <h1 class="text-xl font-bold">Workspaces</h1>
+      <NuxtLink to="/">
+        <h1 class="text-xl font-bold">Workspaces</h1>
+      </NuxtLink>
       <ul>
         <li v-for="workspace in db.workspaces" :key="workspace.name">
           <NuxtLink

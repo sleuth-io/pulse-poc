@@ -20,15 +20,15 @@
         <div v-for="widget in review.schema" :key="widget.id"
           class="flex flex-col w-48 bg-gray-100 dark:bg-gray-700 p-6 mr-3">
           <label :for="widget.id" class="text-sm">{{ widget.title }}</label>
-          <InputText v-model="review.entry[widget.id]" :disabled="review.status !== 'in-progress'"
+          <InputText v-model="review.entry[widget.id]" :disabled="review.status !== 'in-review'"
             class="text-3xl mt-3" />
         </div>
       </div>
     </div>
 
-    <template v-if="review.status !== 'published'">
+    <template v-if="review.status !== 'completed'">
       <Button label="Save" class="mt-8" icon="pi pi-save" severity="secondary" @click="save(false)" />
-      <Button label="Publish" class="mt-8" icon="pi pi-save" @click="save()" />
+      <Button :label="review.status === 'draft' ? 'Notify reviewers' : 'Record metrics'" class="mt-8" icon="pi pi-save" @click="save()" />
     </template>
   </div>
 </template>
@@ -54,9 +54,9 @@ function addField() {
 function save(publish = true) {
   if (publish) {
     if (review.status === 'draft') {
-      review.status = 'in-progress'
+      review.status = 'in-review'
     } else {
-      review.status = 'published'
+      review.status = 'completed'
     }
   }
   navigateTo({ name: 'workspaceSlug-folderSlug' })
