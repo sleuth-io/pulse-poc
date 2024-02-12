@@ -28,7 +28,7 @@
 
     <template v-if="review.status !== 'completed'">
       <Button label="Save" class="mt-8" icon="pi pi-save" severity="secondary" @click="save(false)" />
-      <Button :label="review.status === 'draft' ? 'Notify reviewers' : 'Record metrics'" class="mt-8" icon="pi pi-save" @click="save()" />
+      <Button :label="review.status === 'draft' ? 'Notify reviewers' : 'Record metrics'" class="mt-8 ml-2" icon="pi pi-send" @click="save()" />
     </template>
   </div>
 </template>
