@@ -4,9 +4,11 @@ import type { ReviewType } from '~/app.vue'
 const route = useRoute('workspaceSlug-folderSlug-_create')
 const db = useDatabase()
 
+const folder = db.value.workspaces.find(w => w.slug === route.params.workspaceSlug)?.folders.find(f => f.slug === route.params.folderSlug)!
+
 const review = ref<ReviewType>({
   recurrence: 'monthly',
-  startDate: new Date().toISOString(),
+  startDate: getStartDate(folder),
   entry: {},
   schema: [
     {
@@ -14,10 +16,9 @@ const review = ref<ReviewType>({
       title: 'New widget',
     }
   ],
-  slug: route.params.folderSlug + new Date().toISOString(),
+  slug: `${route.params.folderSlug}-${getStartDate(folder)}`,
   status: 'draft',
 })
-const folder = db.value.workspaces.find(w => w.slug === route.params.workspaceSlug)?.folders.find(f => f.slug === route.params.folderSlug)!
 
 function createReview() {
   folder.reviews.push(review.value)

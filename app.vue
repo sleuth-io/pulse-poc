@@ -9,7 +9,7 @@ interface WorkspaceType {
   folders: FolderType[];
 }
 
-interface FolderType {
+export interface FolderType {
   name: string;
   slug: string;
   reviews: ReviewType[];
@@ -46,8 +46,8 @@ useState<PulseType>("db", () => ({
             {
               recurrence: "weekly",
               status: "completed",
-              startDate: "2021-01-01",
-              slug: "weekly-dora-2021-01-01",
+              startDate: "2024-01-15",
+              slug: "weekly-dora-2024-01-15",
               schema: [
                 {
                   title: "MTTR widget",
@@ -60,7 +60,7 @@ useState<PulseType>("db", () => ({
               ],
               entry:
               {
-                _date: "2021-01-02",
+                _date: "2024-01-15",
                 _user: 1,
                 "mttr-widget": 1,
                 "frequency-widget": 2,
@@ -69,8 +69,8 @@ useState<PulseType>("db", () => ({
             {
               recurrence: "weekly",
               status: "completed",
-              startDate: "2021-01-02",
-              slug: "weekly-dora-2021-01-02",
+              startDate: "2024-01-22",
+              slug: "weekly-dora-2024-01-22",
               schema: [
                 {
                   title: "MTTR widget",
@@ -83,7 +83,7 @@ useState<PulseType>("db", () => ({
               ],
               entry:
               {
-                _date: "2021-01-02",
+                _date: "2024-01-22",
                 _user: 1,
                 "mttr-widget": 10,
                 "frequency-widget": 5,
@@ -92,8 +92,8 @@ useState<PulseType>("db", () => ({
             {
               recurrence: "weekly",
               status: "completed",
-              startDate: "2021-01-03",
-              slug: "weekly-dora-2021-01-03",
+              startDate: "2024-01-29",
+              slug: "weekly-dora-2024-01-29",
               schema: [
                 {
                   title: "MTTR widget",
@@ -106,7 +106,7 @@ useState<PulseType>("db", () => ({
               ],
               entry:
               {
-                _date: "2021-01-02",
+                _date: "2024-01-29",
                 _user: 1,
                 "mttr-widget": 3,
                 "frequency-widget": 4,
@@ -120,7 +120,7 @@ useState<PulseType>("db", () => ({
           reviews: [{
             recurrence: "monthly",
             status: "draft",
-            startDate: "2021-01-01",
+            startDate: "2024-01-01",
             slug: "monthly-devex",
             schema: [
               {

@@ -3,7 +3,7 @@
     <h2 class="text-xl mb-6">Folder: {{ params.folderSlug }}</h2>
 
     <div class="flex gap-4 flex-wrap">
-      <NuxtLink v-for="review in folder.reviews" :key="review.slug"
+      <NuxtLink v-for="review in sortedReviews" :key="review.slug"
         :to="`/${params.workspaceSlug}/${params.folderSlug}/${review.slug}`"
         class="flex px-3 h-48 w-64 items-center justify-center relative" :class="{
           'bg-green-400': review.status === 'completed',
@@ -41,12 +41,17 @@ const folder = computed(() => {
     .folders.find((f) => f.slug === params.folderSlug)!
 })
 
+const sortedReviews = computed(() =>
+  folder.value.reviews.sort((a, b) => b.startDate.localeCompare(a.startDate))
+)
+
 function createDraftFrom(review: ReviewType) {
   folder.value.reviews.unshift({
     ...review,
     status: 'draft',
     entry: {},
-    slug: (Math.random() + 1).toString(36).substring(7)
+    slug: (Math.random() + 1).toString(36).substring(7),
+    startDate: getStartDate(folder.value)
   })
 }
 </script>
