@@ -15,7 +15,7 @@ interface FolderType {
   reviews: ReviewType[];
 }
 
-interface ReviewType {
+export interface ReviewType {
   recurrence: "weekly" | "monthly";
   status: "draft" | "in-progress" | "published";
   startDate: string;
