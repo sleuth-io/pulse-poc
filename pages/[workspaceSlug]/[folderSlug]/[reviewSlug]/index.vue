@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2 class="text-xl">
+      <h2 class="text-xl mb-6">
         <i class="pi pi-check mr-2" />
         Review: {{ review.slug }}
       </h2>

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h2 class="text-xl">Folder: {{ params.folderSlug }}</h2>
+    <h2 class="text-xl mb-6">Folder: {{ params.folderSlug }}</h2>
 
     <div class="flex gap-4 flex-wrap">
       <NuxtLink v-for="review in folder.reviews" :key="review.slug"
         :to="`/${params.workspaceSlug}/${params.folderSlug}/${review.slug}`"
-        class="flex px-3 h-48 min-w-36 items-center justify-center relative" :class="{
+        class="flex px-3 h-48 w-64 items-center justify-center relative" :class="{
           'bg-green-400': review.status === 'completed',
           'bg-gray-400': review.status === 'draft',
           'bg-yellow-400': review.status === 'in-review',
@@ -20,7 +20,7 @@
 
       <NuxtLink
         :to="`/${params.workspaceSlug}/${params.folderSlug}/_create`"
-        class="flex px-3 h-48 min-w-36 items-center justify-center bg-gray-200">
+        class="flex px-3 h-48 w-64 items-center justify-center bg-gray-200">
         <i class="pi pi-plus mr-2" />
         New review
       </NuxtLink>
