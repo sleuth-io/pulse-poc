@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h2 class="text-xl">Workspace: {{ $route.params.workspaceSlug }}</h2>
+    <h2 class="text-xl">Workspace: {{ route.params.workspaceSlug }}</h2>
 
     <div class="flex mt-3">
       <NuxtLink
-        v-for="folder in $db.workspaces.find(
+        v-for="folder in db.workspaces.find(
           (w) => w.slug === params.workspaceSlug
-        ).folders"
+        )!.folders"
         :key="folder.slug"
         :to="`/${params.workspaceSlug}/${folder.slug}`"
         class="flex bg-gray-400 px-3 h-48 min-w-36 items-center justify-center mr-3"
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-const $route = useRoute();
-const params = $route.params;
-const $db = useState("db");
+const route = useRoute('workspaceSlug');
+const params = route.params;
+const db = useDatabase();
 </script>

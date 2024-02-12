@@ -1,20 +1,53 @@
 <script setup lang="ts">
-useState("db", () => ({
+export interface PulseType {
+  workspaces: WorkspaceType[];
+}
+
+interface WorkspaceType {
+  name: string;
+  slug: string;
+  folders: FolderType[];
+}
+
+interface FolderType {
+  name: string;
+  slug: string;
+  reviews: ReviewType[];
+}
+
+interface ReviewType {
+  recurrence: "weekly" | "monthly";
+  status: "draft" | "in-progress" | "published";
+  startDate: string;
+  slug: string;
+  schema: SchemaType[];
+  entry: EntryType;
+}
+
+interface SchemaType {
+  title: string;
+  id: string;
+}
+
+interface EntryType {
+  [key: string]: number | string | null;
+}
+
+useState<PulseType>("db", () => ({
   workspaces: [
     {
       name: "Pulse engineering",
       slug: "pulse-engineering",
       folders: [
         {
-          name: "Frontend",
-          slug: "frontend",
-          reviewDefinitions: [
+          name: "Weekly DORA",
+          slug: "weekly-dora",
+          reviews: [
             {
-              name: "Weekly DORA",
               recurrence: "weekly",
-              startDate: "2021-01-01",
-              slug: "weekly-dora",
-              version: 1,
+              status: "draft",
+              startDate: "2020-31-12",
+              slug: "weekly-dora-2020-31-12",
               schema: [
                 {
                   title: "MTTR widget",
@@ -25,41 +58,134 @@ useState("db", () => ({
                   id: "frequency-widget",
                 },
               ],
-              reviews: [
-                {
-                  slug: "weekly-dora-2021-01-01-2fc01",
-                  date: "2021-01-01",
-                  values: {
-                    "mttr-widget": 10,
-                    "frequency-widget": 5,
-                  },
-                },
-              ],
+              entry:
+              {
+                _date: null,
+                _user: null,
+                "mttr-widget": null,
+                "frequency-widget": null,
+              }
             },
             {
-              name: "Monthly DevEx",
-              recurrence: "monthly",
-              startDate: "2021-01-01",
-              slug: "monthly-devex",
-              version: 1,
+              recurrence: "weekly",
+              startDate: "2021-01-07",
+              status: "in-progress",
+              slug: "weekly-dora-2021-01-07",
               schema: [
                 {
-                  title: "Potato",
-                  id: "potato",
+                  title: "MTTR widget",
+                  id: "mttr-widget",
                 },
                 {
-                  title: "Tomato",
-                  id: "tomato",
+                  title: "Frequency widget",
+                  id: "frequency-widget",
                 },
               ],
-              reviews: [],
+              entry:
+              {
+                _date: "2021-01-02",
+                _user: 1,
+                "mttr-widget": 1,
+                "frequency-widget": null,
+              },
             },
+            {
+              recurrence: "weekly",
+              status: "published",
+              startDate: "2021-01-01",
+              slug: "weekly-dora-2021-01-01",
+              schema: [
+                {
+                  title: "MTTR widget",
+                  id: "mttr-widget",
+                },
+                {
+                  title: "Frequency widget",
+                  id: "frequency-widget",
+                },
+              ],
+              entry:
+              {
+                _date: "2021-01-02",
+                _user: 1,
+                "mttr-widget": 1,
+                "frequency-widget": 2,
+              }
+            },
+            {
+              recurrence: "weekly",
+              status: "published",
+              startDate: "2021-01-02",
+              slug: "weekly-dora-2021-01-02",
+              schema: [
+                {
+                  title: "MTTR widget",
+                  id: "mttr-widget",
+                },
+                {
+                  title: "Frequency widget",
+                  id: "frequency-widget",
+                },
+              ],
+              entry:
+              {
+                _date: "2021-01-02",
+                _user: 1,
+                "mttr-widget": 10,
+                "frequency-widget": 5,
+              }
+            },
+            {
+              recurrence: "weekly",
+              status: "published",
+              startDate: "2021-01-03",
+              slug: "weekly-dora-2021-01-03",
+              schema: [
+                {
+                  title: "MTTR widget",
+                  id: "mttr-widget",
+                },
+                {
+                  title: "Frequency widget",
+                  id: "frequency-widget",
+                },
+              ],
+              entry:
+              {
+                _date: "2021-01-02",
+                _user: 1,
+                "mttr-widget": 3,
+                "frequency-widget": 4,
+              }
+            },
+          ]
+        },
+        {
+          name: "Monthly DevEx",
+          slug: "monthly-devex",
+          reviews: [{
+            recurrence: "monthly",
+            status: "draft",
+            startDate: "2021-01-01",
+            slug: "monthly-devex",
+            schema: [
+              {
+                title: "Potato",
+                id: "potato",
+              },
+              {
+                title: "Tomato",
+                id: "tomato",
+              },
+            ],
+            entry: {},
+          },
           ],
         },
       ],
-    },
-  ],
-}));
+    }
+  ]
+}))
 </script>
 
 <template>
