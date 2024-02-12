@@ -14,6 +14,13 @@
         <i class="pi pi-folder mr-2" />
         {{ folder.name }}
       </NuxtLink>
+      <NuxtLink
+        :to="`/${params.workspaceSlug}/_create`"
+        class="flex bg-gray-200 px-3 h-48 min-w-36 items-center justify-center mr-3"
+      >
+        <i class="pi pi-plus mr-2" />
+        New folder
+      </NuxtLink>
     </div>
   </div>
 </template>

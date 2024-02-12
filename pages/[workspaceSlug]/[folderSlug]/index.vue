@@ -17,6 +17,13 @@
         <Button v-if="review.status === 'published'" :icon="'pi pi-copy'" class="!absolute top-0 right-0"
           @click.prevent="createDraftFrom(review)" />
       </NuxtLink>
+
+      <NuxtLink
+        :to="`/${params.workspaceSlug}/${params.folderSlug}/_create`"
+        class="flex px-3 h-48 min-w-36 items-center justify-center bg-gray-200">
+        <i class="pi pi-plus mr-2" />
+        New review
+      </NuxtLink>
     </div>
   </div>
 </template>
