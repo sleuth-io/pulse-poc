@@ -38,17 +38,22 @@ function addField() {
 
 <template>
   <div>
-    <Dropdown
-      v-model="review.recurrence"
-      :options="['monthly', 'weekly']"
-    />
+    <div class="flex-auto">
+      <label for="recurrence" class="font-bold block mb-2">Recurrence</label>
+      <Dropdown
+        v-model="review.recurrence"
+        id="recurrence"
+        :options="['monthly', 'weekly']"
+      />
+    </div>
 
-    <Card v-for="field in review.schema" class="mt-4">
+    <Divider />
+    <Card v-for="field in review.schema" class="mb-4">
       <template #content>
       <InputText v-model="field.title"></InputText></template>
     </Card>
     <Button label="Add field" icon="pi pi-plus" @click="addField" severity="secondary"/>
-    <hr class="mt-8">
+    <Divider />
     <Button label="Create"  icon="pi pi-save" @click="createReview" />
   </div>
 </template>
