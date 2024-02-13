@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import type { ReviewType } from '~/app.vue'
-
 const route = useRoute('workspaceSlug-folderSlug-_create')
 const db = useDatabase()
 
-const folder = db.value.workspaces.find(w => w.slug === route.params.workspaceSlug)?.folders.find(f => f.slug === route.params.folderSlug)!
+const folder = db.value.workspaces.find(w => w.slug === route.params.workspaceSlug)?.folders.find(f => f.slug === route.params.folderSlug)
 
 const review = ref<ReviewType>({
   recurrence: 'monthly',
@@ -21,7 +19,7 @@ const review = ref<ReviewType>({
 })
 
 function createReview() {
-  folder.reviews.push(review.value)
+  folder?.reviews.push(review.value)
 
   navigateTo({
     name: 'workspaceSlug-folderSlug',
@@ -49,7 +47,7 @@ function addField() {
     </div>
 
     <Divider />
-    <Card v-for="field in review.schema" class="mb-4">
+    <Card v-for="(field, i) in review.schema" :key="i" class="mb-4">
       <template #content>
         <InputText v-model="field.title" />
       </template>

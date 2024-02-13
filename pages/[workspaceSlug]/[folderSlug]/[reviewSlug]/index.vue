@@ -36,7 +36,7 @@ function save(publish = true) {
       <div>Date: {{ review.startDate }}</div>
 
       <div v-if="review.status === 'draft'">
-        <Card v-for="field in review.schema" class="mt-4">
+        <Card v-for="(field, i) in review.schema" :key="i" class="mt-4">
           <template #content>
             <InputText v-model="field.title" />
           </template>

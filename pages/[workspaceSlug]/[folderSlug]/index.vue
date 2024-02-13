@@ -6,18 +6,18 @@ const params = route.params
 const db = useDatabase()
 const { currentUser } = useCurrentUser()
 
+const folder = computed(() => {
+  return db.value.workspaces
+    .find(w => w.slug === params.workspaceSlug)!
+    .folders.find(f => f.slug === params.folderSlug)!
+})
+
 function toggleRecurrence() {
   if (folder.value.recurrence === null)
     folder.value.recurrence = 'weekly'
   else
     folder.value.recurrence = null
 }
-
-const folder = computed(() => {
-  return db.value.workspaces
-    .find(w => w.slug === params.workspaceSlug)!
-    .folders.find(f => f.slug === params.folderSlug)!
-})
 
 const recurrenceEnabled = computed(() => Boolean(folder.value.recurrence))
 
