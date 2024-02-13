@@ -2,7 +2,7 @@
   <div>
     <h2 class="text-xl mb-6">Folder: {{ params.folderSlug }}</h2>
 
-    <div class="">
+    <div v-if="currentUser?.role === 'admin'">
       <div class="flex items-center mb-4">
         <label for="recurrence" class="font-bold text-lg mb-0.5 mr-4">Automatic recurrence:</label>
         <div :class="!folder.recurrence ? 'text-black' : 'text-gray-400'">Disabled</div>
@@ -70,6 +70,7 @@
         <ReviewList title="Draft reviews" :reviews="draftReviews" :workspace-slug="params.workspaceSlug"
           :folder-slug="params.folderSlug" @create-draft="createDraftFrom" />
         <NuxtLink :to="`/${params.workspaceSlug}/${params.folderSlug}/_create`"
+          v-if="currentUser?.role === 'admin'"
           class="flex px-3 h-12 items-center justify-center bg-gray-100">
           <i class="pi pi-plus mr-2" />
           Create new draft
@@ -92,6 +93,7 @@ import type { ReviewType } from '~/composables/use-database';
 const route = useRoute('workspaceSlug-folderSlug');
 const params = route.params
 const db = useDatabase()
+const { currentUser } = useCurrentUser()
 
 function toggleRecurrence() {
   if (folder.value.recurrence === null) {

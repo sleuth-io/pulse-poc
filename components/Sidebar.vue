@@ -1,10 +1,13 @@
 <script setup lang="ts">
 const db = useDatabase()
+
+const { setCurrentUser, currentUser } = useCurrentUser()
+const [admin, user] = db.value.users
 </script>
 
 <template>
-  <div class="flex flex-col flex-0 w-72 bg-surface-200 dark:bg-surface-600">
-    <div class="p-4">
+  <div class="flex flex-col flex-0 w-64 bg-surface-200 dark:bg-surface-600 gap-3 p-4">
+    <div>
       <NuxtLink to="/">
         <h1 class="text-xl font-bold">Workspaces</h1>
       </NuxtLink>
@@ -35,8 +38,13 @@ const db = useDatabase()
         </li>
       </ul>
     </div>
-    <NuxtLink to="/database" class="mt-auto p-4">
+    <NuxtLink to="/database" class="mt-auto">
       <i class="pi pi-database mr-2" />Database
     </NuxtLink>
+    <div>Viewing as:</div>
+    <div class="flex gap-4">
+      <Button label="Admin" plain @click="setCurrentUser(admin)" :disabled="admin === currentUser" />
+      <Button label="User" plain @click="setCurrentUser(user)" :disabled="user === currentUser" />
+    </div>
   </div>
 </template>

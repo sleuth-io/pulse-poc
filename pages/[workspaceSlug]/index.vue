@@ -15,6 +15,7 @@
         {{ folder.name }}
       </NuxtLink>
       <NuxtLink
+        v-if="currentUser?.role === 'admin'"
         :to="`/${params.workspaceSlug}/_create`"
         class="flex bg-gray-200 px-3 h-48 w-64 items-center justify-center"
       >
@@ -29,4 +30,5 @@
 const route = useRoute('workspaceSlug');
 const params = route.params;
 const db = useDatabase();
+const { currentUser } = useCurrentUser();
 </script>

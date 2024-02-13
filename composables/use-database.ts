@@ -1,5 +1,11 @@
 export interface PulseType {
   workspaces: WorkspaceType[];
+  users: UserType[];
+}
+
+export interface UserType {
+  email: string;
+  role: "admin" | "user";
 }
 
 interface WorkspaceType {
@@ -35,6 +41,16 @@ interface EntryType {
 
 export default () =>
   useState<PulseType>("db", () => ({
+    users: [
+      {
+        email: "admin@pulse.io",
+        role: "admin",
+      },
+      {
+        email: "user@pulse.io",
+        role: "user",
+      },
+    ],
     workspaces: [
       {
         name: "Pulse engineering",
