@@ -2,38 +2,104 @@
   <div>
     <h2 class="text-xl mb-6">Folder: {{ params.folderSlug }}</h2>
 
-    <div class="flex gap-4 flex-wrap">
-      <NuxtLink v-for="review in sortedReviews" :key="review.slug"
-        :to="`/${params.workspaceSlug}/${params.folderSlug}/${review.slug}`"
-        class="flex px-3 h-48 w-64 items-center justify-center relative" :class="{
-          'bg-green-400': review.status === 'completed',
-          'bg-gray-400': review.status === 'draft',
-          'bg-yellow-400': review.status === 'in-review',
-        }">
-        <i class="pi pi-user-edit" v-if="review.status === 'draft'" />
-        <i class="pi pi-pencil" v-if="review.status === 'in-review'" />
-        <i class="pi pi-check-circle" v-else-if="review.status === 'completed'" />
-        <span class="ml-2">{{ params.folderSlug }} ({{ review.startDate }})</span>
-        <Button v-if="review.status === 'completed'" :icon="'pi pi-copy'" class="!absolute top-0 right-0"
-          @click.prevent="createDraftFrom(review)" />
-      </NuxtLink>
+    <div class="">
+      <div class="flex items-center mb-4">
+        <label for="recurrence" class="font-bold text-lg mb-0.5 mr-4">Automatic recurrence:</label>
+        <div :class="!folder.recurrence ? 'text-black' : 'text-gray-400'">Disabled</div>
+        <InputSwitch id="recurrence" class="mx-1" @click="toggleRecurrence" :model-value="recurrenceEnabled">
+        </InputSwitch>
+        <div :class="folder.recurrence ? 'text-black' : 'text-gray-400'">Enabled</div>
+      </div>
+    </div>
 
-      <NuxtLink
-        :to="`/${params.workspaceSlug}/${params.folderSlug}/_create`"
-        class="flex px-3 h-48 w-64 items-center justify-center bg-gray-200">
-        <i class="pi pi-plus mr-2" />
-        New review
-      </NuxtLink>
+    <Card v-if="folder.recurrence">
+      <!-- <template #title>Recurrence settings</template> -->
+      <template #content>
+        <div>
+          <div class="text-lg font-bold">Settings</div>
+          <div class="mt-2">
+            <label for="recurrence" class="mr-2 w-20 inline-block">Repeat:</label>
+            <Dropdown v-model="folder.recurrence" id="recurrence" class="w-56" :options="['monthly', 'weekly']" />
+          </div>
+          <div class="mt-2">
+            <label for="date" class="mr-2 w-20 inline-block">Next cycle:</label>
+            <InputText class="w-56" type="date" id="date" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 mt-6 gap-8">
+          <div>
+            <div class="text-lg font-bold text-gray-500 text-center">
+              Draft
+              <i class="pi pi-question-circle ml-1"
+                v-tooltip.top="'At the beginning of a cycle:\n\n - The current draft review will move to In Progress\n\n - A fresh draft for the next cycle will be created'" />
+            </div>
+            <NuxtLink v-if="draftReviews.length > 0"
+              :to="`/${params.workspaceSlug}/${params.folderSlug}/${draftReviews[0].slug}`"
+              class="flex px-3 h-48 w-full items-center justify-center bg-gray-100">
+              <i class="pi pi-user-edit" />
+              <span class="ml-2">{{ params.folderSlug }} ({{ draftReviews[0].startDate }})</span>
+            </NuxtLink>
+          </div>
+          <div>
+            <div class="text-lg font-bold text-yellow-500 text-center">
+              In Progress
+              <i class="pi pi-question-circle ml-1"
+                v-tooltip.top="'In Progress reviews will be marked Ready To Review once all participants respond'" />
+            </div>
+            <NuxtLink v-if="inReviewReviews.length > 0"
+              :to="`/${params.workspaceSlug}/${params.folderSlug}/${inReviewReviews[0].slug}`"
+              class="flex px-3 h-48 w-full items-center justify-center bg-yellow-100">
+              <i class="pi pi-user-edit" />
+              <span class="ml-2">{{ params.folderSlug }} ({{ inReviewReviews[0].startDate }})</span>
+            </NuxtLink>
+
+          </div>
+          <div>
+            <div class="text-lg font-bold text-orange-500 text-center">
+              Ready to review
+            </div>
+            <div class="flex h-48 w-full border-orange-100 text-orange-300 border items-center justify-center"></div>
+          </div>
+        </div>
+      </template>
+    </Card>
+
+    <div class="flex gap-2 flex-col">
+      <template v-if="!recurrenceEnabled">
+        <ReviewList title="Draft reviews" :reviews="draftReviews" :workspace-slug="params.workspaceSlug"
+          :folder-slug="params.folderSlug" @create-draft="createDraftFrom" />
+        <NuxtLink :to="`/${params.workspaceSlug}/${params.folderSlug}/_create`"
+          class="flex px-3 h-12 items-center justify-center bg-gray-100">
+          <i class="pi pi-plus mr-2" />
+          Create new draft
+        </NuxtLink>
+
+
+        <ReviewList title="Reviews in progress" :reviews="inReviewReviews" :workspace-slug="params.workspaceSlug"
+          :folder-slug="params.folderSlug" @create-draft="createDraftFrom" />
+      </template>
+
+      <ReviewList title="Completed reviews" :reviews="completedReviews" :workspace-slug="params.workspaceSlug"
+        :folder-slug="params.folderSlug" @create-draft="createDraftFrom" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ReviewType } from '~/app.vue';
+import type { ReviewType } from '~/composables/use-database';
 
 const route = useRoute('workspaceSlug-folderSlug');
 const params = route.params
 const db = useDatabase()
+
+function toggleRecurrence() {
+  if (folder.value.recurrence === null) {
+    folder.value.recurrence = 'weekly'
+  } else {
+    folder.value.recurrence = null
+  }
+}
 
 const folder = computed(() => {
   return db.value.workspaces
@@ -41,8 +107,18 @@ const folder = computed(() => {
     .folders.find((f) => f.slug === params.folderSlug)!
 })
 
-const sortedReviews = computed(() =>
-  folder.value.reviews.sort((a, b) => b.startDate.localeCompare(a.startDate))
+const recurrenceEnabled = computed(() => Boolean(folder.value.recurrence))
+
+const completedReviews = computed(() =>
+  folder.value.reviews.filter(r => r.status === 'completed').sort((a, b) => b.startDate.localeCompare(a.startDate))
+)
+
+const draftReviews = computed(() =>
+  folder.value.reviews.filter(r => r.status === 'draft').sort((a, b) => b.startDate.localeCompare(a.startDate))
+)
+
+const inReviewReviews = computed(() =>
+  folder.value.reviews.filter(r => r.status === 'in-review').sort((a, b) => b.startDate.localeCompare(a.startDate))
 )
 
 function createDraftFrom(review: ReviewType) {
