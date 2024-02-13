@@ -1,11 +1,20 @@
+<script setup lang="ts">
+const route = useRoute('workspaceSlug')
+const params = route.params
+const db = useDatabase()
+const { currentUser } = useCurrentUser()
+</script>
+
 <template>
   <div>
-    <h2 class="text-xl mb-6">Workspace: {{ route.params.workspaceSlug }}</h2>
+    <h2 class="text-xl mb-6">
+      Workspace: {{ route.params.workspaceSlug }}
+    </h2>
 
     <div class="flex gap-4 flex-wrap">
       <NuxtLink
         v-for="folder in db.workspaces.find(
-          (w) => w.slug === params.workspaceSlug
+          (w) => w.slug === params.workspaceSlug,
         )!.folders"
         :key="folder.slug"
         :to="`/${params.workspaceSlug}/${folder.slug}`"
@@ -25,10 +34,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const route = useRoute('workspaceSlug');
-const params = route.params;
-const db = useDatabase();
-const { currentUser } = useCurrentUser();
-</script>

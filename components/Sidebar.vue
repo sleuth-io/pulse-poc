@@ -9,7 +9,9 @@ const [admin, user] = db.value.users
   <div class="flex flex-col flex-0 w-64 bg-surface-200 dark:bg-surface-600 gap-3 p-4">
     <div>
       <NuxtLink to="/">
-        <h1 class="text-xl font-bold">Workspaces</h1>
+        <h1 class="text-xl font-bold">
+          Workspaces
+        </h1>
       </NuxtLink>
       <ul>
         <li v-for="workspace in db.workspaces" :key="workspace.name">
@@ -17,8 +19,9 @@ const [admin, user] = db.value.users
             :to="`/${workspace.slug}`"
             class="block py-3"
             active-class="text-underline"
-            >{{ workspace.name }}</NuxtLink
           >
+            {{ workspace.name }}
+          </NuxtLink>
           <ul>
             <li
               v-for="folder in workspace.folders"
@@ -43,8 +46,8 @@ const [admin, user] = db.value.users
     </NuxtLink>
     <div>Viewing as:</div>
     <div class="flex gap-4">
-      <Button label="Admin" plain @click="setCurrentUser(admin)" :disabled="admin === currentUser" />
-      <Button label="User" plain @click="setCurrentUser(user)" :disabled="user === currentUser" />
+      <Button label="Admin" plain :disabled="admin === currentUser" @click="setCurrentUser(admin)" />
+      <Button label="User" plain :disabled="user === currentUser" @click="setCurrentUser(user)" />
     </div>
   </div>
 </template>

@@ -14,7 +14,7 @@ const review = ref<ReviewType>({
     {
       id: 'new-widget',
       title: 'New widget',
-    }
+    },
   ],
   slug: `${route.params.folderSlug}-${getStartDate(folder)}`,
   status: 'draft',
@@ -25,14 +25,14 @@ function createReview() {
 
   navigateTo({
     name: 'workspaceSlug-folderSlug',
-    params: route.params
+    params: route.params,
   })
 }
 
 function addField() {
   review.value.schema.push({
     title: 'New widget',
-    id: (Math.random() + 1).toString(36).substring(7)
+    id: (Math.random() + 1).toString(36).substring(7),
   })
 }
 </script>
@@ -42,8 +42,8 @@ function addField() {
     <div class="flex-auto">
       <label for="recurrence" class="font-bold block mb-2">Recurrence</label>
       <Dropdown
-        v-model="review.recurrence"
         id="recurrence"
+        v-model="review.recurrence"
         :options="['monthly', 'weekly']"
       />
     </div>
@@ -51,10 +51,11 @@ function addField() {
     <Divider />
     <Card v-for="field in review.schema" class="mb-4">
       <template #content>
-      <InputText v-model="field.title"></InputText></template>
+        <InputText v-model="field.title" />
+      </template>
     </Card>
-    <Button label="Add field" icon="pi pi-plus" @click="addField" severity="secondary"/>
+    <Button label="Add field" icon="pi pi-plus" severity="secondary" @click="addField" />
     <Divider />
-    <Button label="Create"  icon="pi pi-save" @click="createReview" />
+    <Button label="Create" icon="pi pi-save" @click="createReview" />
   </div>
 </template>

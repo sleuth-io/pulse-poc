@@ -1,8 +1,8 @@
-import type { UserType } from "./use-database"
+import type { UserType } from './use-database'
 
-export default function() {
+export default function () {
   const db = useDatabase()
-  const currentUser = useState<UserType | null>("currentUser", () => db.value.users[0])
+  const currentUser = useState<UserType | null>('currentUser', () => db.value.users[0])
 
   const setCurrentUser = (user: UserType) => {
     currentUser.value = user

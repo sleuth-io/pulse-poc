@@ -10,15 +10,15 @@ function createFolder() {
   workspace.folders.push({
     name: folderName.value,
     reviews: [],
-    slug: folderSlug
+    slug: folderSlug,
   })
 
   navigateTo({
     name: 'workspaceSlug-folderSlug',
     params: {
       ...route.params,
-      folderSlug
-    }
+      folderSlug,
+    },
   })
 }
 </script>
