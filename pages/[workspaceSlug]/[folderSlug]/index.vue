@@ -23,7 +23,7 @@
           </div>
           <div class="mt-2">
             <label for="date" class="mr-2 w-20 inline-block">Next cycle:</label>
-            <InputText class="w-56" type="date" id="date" />
+            <InputText class="!w-56" type="date" id="date" />
           </div>
         </div>
 
