@@ -11,6 +11,7 @@ interface WorkspaceType {
 export interface FolderType {
   name: string;
   slug: string;
+  recurrence: "weekly" | "monthly" | null;
   reviews: ReviewType[];
 }
 
@@ -42,7 +43,52 @@ export default () =>
           {
             name: "Weekly DORA",
             slug: "weekly-dora",
+            recurrence: null,
             reviews: [
+              {
+                recurrence: "weekly",
+                status: "draft",
+                startDate: "2024-02-12",
+                slug: "weekly-dora-2024-02-12",
+                schema: [
+                  {
+                    title: "MTTR widget",
+                    id: "mttr-widget",
+                  },
+                  {
+                    title: "Frequency widget",
+                    id: "frequency-widget",
+                  },
+                ],
+                entry: {
+                  _date: "2024-02-12",
+                  _user: 1,
+                  "mttr-widget": 1,
+                  "frequency-widget": 2,
+                },
+              },
+              {
+                recurrence: "weekly",
+                status: "in-review",
+                startDate: "2024-02-05",
+                slug: "weekly-dora-2024-02-05",
+                schema: [
+                  {
+                    title: "MTTR widget",
+                    id: "mttr-widget",
+                  },
+                  {
+                    title: "Frequency widget",
+                    id: "frequency-widget",
+                  },
+                ],
+                entry: {
+                  _date: "2024-02-05",
+                  _user: 1,
+                  "mttr-widget": 1,
+                  "frequency-widget": 2,
+                },
+              },
               {
                 recurrence: "weekly",
                 status: "completed",
@@ -114,6 +160,7 @@ export default () =>
           {
             name: "Monthly DevEx",
             slug: "monthly-devex",
+            recurrence: null,
             reviews: [
               {
                 recurrence: "monthly",
