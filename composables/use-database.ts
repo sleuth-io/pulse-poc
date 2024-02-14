@@ -52,9 +52,9 @@ export interface ExistingWidgetType {
 }
 
 interface WidgetDataType {
-  _date: string
-  _user: number | null
-  value: number
+  _date: string;
+  _user: number | null;
+  value: number | string | null;
 }
 
 export default () =>

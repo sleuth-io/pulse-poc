@@ -9,21 +9,60 @@ const review = db.value.workspaces
   .folders.find(f => f.slug === params.folderSlug)!
   .reviews.find(d => d.slug === params.reviewSlug)!
 
-function addField() {
-  review.schema.push({
-    title: 'New widget',
+const reviewWidgets = db.value.widgets.existingWidgets.filter(w =>
+  review.schema.some(s => s.widgetId === w.id),
+)
+
+const tempWidgetValues = reviewWidgets.reduce(
+  (acc, w) => {
+    acc[w.id] = w.data.find(d => d._date === review.startDate)?.value || ''
+    return acc
+  },
+  {} as Record<string, string>,
+)
+
+const newWidgetsList = ref<ExistingWidgetType[]>([])
+
+function createNewWidget(): ExistingWidgetType {
+  return {
     id: (Math.random() + 1).toString(36).substring(7),
+    title: 'New widget',
+    widgetTypeId: 'number',
+    data: [],
+  }
+}
+
+function addWidget() {
+  const newWidget = createNewWidget()
+  review.schema.push({
+    widgetId: newWidget.id,
   })
+  newWidgetsList.value.push(newWidget)
 }
 
 function save(publish = true) {
+  if (newWidgetsList.value.length)
+    db.value.widgets.existingWidgets.push(...newWidgetsList.value)
+
   if (publish) {
-    if (review.status === 'draft')
+    if (review.status === 'draft') {
+      for (const [key, value] of Object.entries(tempWidgetValues)) {
+        const widget = reviewWidgets.find(w => w.id === key)!
+        if (widget.data.some(d => d._date === review.startDate)) {
+          widget.data.find(d => d._date === review.startDate)!.value = value
+        }
+        else {
+          widget.data.push({
+            _date: review.startDate,
+            _user: 1,
+            value,
+          })
+        }
+      }
       review.status = 'in-progress'
-    else if (review.status === 'in-progress')
-      review.status = 'in-review'
-    else if (review.status === 'in-review')
-      review.status = 'completed'
+    }
+    else if (review.status === 'in-progress') { review.status = 'in-review' }
+    else if (review.status === 'in-review') { review.status = 'completed' }
   }
   navigateTo({ name: 'workspaceSlug-folderSlug' })
 }
@@ -61,22 +100,34 @@ const moveStatusButtonIcon = computed(() => {
       <div>Date: {{ review.startDate }}</div>
 
       <div v-if="review.status === 'draft'">
-        <Card v-for="(field, i) in review.schema" :key="i" class="mt-4">
+        <Card
+          v-for="widget in [...reviewWidgets, ...newWidgetsList]"
+          :key="widget.id"
+          class="mt-4"
+        >
           <template #content>
-            <InputText v-model="field.title" />
+            <InputText v-model="widget.title" />
           </template>
         </Card>
-        <Button label="Add field" icon="pi pi-plus" class="mt-8" severity="secondary" @click="addField" />
+        <Button
+          label="Add widget"
+          icon="pi pi-plus"
+          class="mt-8"
+          severity="secondary"
+          @click="addWidget"
+        />
         <hr class="mt-8">
       </div>
       <div v-else class="mt-6 flex">
         <div
-          v-for="widget in review.schema" :key="widget.id"
+          v-for="widget in reviewWidgets"
+          :key="widget.id"
           class="flex flex-col w-48 bg-gray-100 dark:bg-gray-700 p-6 mr-3"
         >
           <label :for="widget.id" class="text-sm">{{ widget.title }}</label>
           <InputText
-            v-model="review.entry[widget.id]" :disabled="review.status === 'completed'"
+            v-model="tempWidgetValues[widget.id]"
+            :disabled="review.status === 'completed'"
             class="text-3xl mt-3"
           />
         </div>
