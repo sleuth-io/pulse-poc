@@ -85,7 +85,7 @@ export default () =>
               },
               {
                 recurrence: 'weekly',
-                status: 'in-review',
+                status: 'in-progress',
                 startDate: '2024-02-05',
                 slug: 'weekly-dora-2024-02-05',
                 schema: [

@@ -26,16 +26,18 @@ const filteredReviews = computed(() => {
     class="flex px-3 h-12 items-center justify-start relative" :class="{
       'bg-green-400': review.status === 'completed',
       'bg-gray-400': review.status === 'draft',
-      'bg-yellow-400': review.status === 'in-review',
+      'bg-yellow-400': review.status === 'in-progress',
+      'bg-orange-400': review.status === 'in-review',
     }"
   >
     <i v-if="review.status === 'draft'" class="pi pi-user-edit" />
-    <i v-if="review.status === 'in-review'" class="pi pi-pencil" />
     <i v-else-if="review.status === 'completed'" class="pi pi-check-circle" />
+    <i v-else class="pi pi-pencil" />
     <span class="ml-2">{{ folderSlug }} ({{ review.startDate }})</span>
     <Button
-      v-if="review.status === 'completed' && currentUser?.role === 'admin'"
+      v-if="review.status !== 'draft' && currentUser?.role === 'admin'"
       icon="pi pi-copy" class="!absolute top-0 right-0 h-12"
+      severity="secondary"
       @click.prevent="$emit('createDraft', review)"
     />
   </NuxtLink>
