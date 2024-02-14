@@ -23,7 +23,7 @@ export interface FolderType {
 
 export interface ReviewType {
   recurrence: 'weekly' | 'monthly'
-  status: 'draft' | 'in-review' | 'completed'
+  status: 'draft' | 'in-progress' | 'in-review' | 'completed'
   startDate: string
   slug: string
   schema: SchemaType[]

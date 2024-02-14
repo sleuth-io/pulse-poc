@@ -33,6 +33,10 @@ const inReviewReviews = computed(() =>
   folder.value.reviews.filter(r => r.status === 'in-review').sort((a, b) => b.startDate.localeCompare(a.startDate)),
 )
 
+const inProgressReviews = computed(() =>
+  folder.value.reviews.filter(r => r.status === 'in-progress').sort((a, b) => b.startDate.localeCompare(a.startDate)),
+)
+
 function createDraftFrom(review: ReviewType) {
   folder.value.reviews.unshift({
     ...review,
@@ -97,6 +101,7 @@ function createDraftFrom(review: ReviewType) {
               <i class="pi pi-user-edit" />
               <span class="ml-2">{{ params.folderSlug }} ({{ draftReviews[0].startDate }})</span>
             </NuxtLink>
+            <div v-else class="flex h-48 w-full border-gray-100 border-4" />
           </div>
           <div>
             <div class="text-lg font-bold text-yellow-500 text-center">
@@ -107,19 +112,28 @@ function createDraftFrom(review: ReviewType) {
               />
             </div>
             <NuxtLink
-              v-if="inReviewReviews.length > 0"
-              :to="`/${params.workspaceSlug}/${params.folderSlug}/${inReviewReviews[0].slug}`"
+              v-if="inProgressReviews.length > 0"
+              :to="`/${params.workspaceSlug}/${params.folderSlug}/${inProgressReviews[0].slug}`"
               class="flex px-3 h-48 w-full items-center justify-center bg-yellow-100"
             >
               <i class="pi pi-user-edit" />
-              <span class="ml-2">{{ params.folderSlug }} ({{ inReviewReviews[0].startDate }})</span>
+              <span class="ml-2">{{ params.folderSlug }} ({{ inProgressReviews[0].startDate }})</span>
             </NuxtLink>
+            <div v-else class="flex h-48 w-full border-yellow-100 border-4" />
           </div>
           <div>
             <div class="text-lg font-bold text-orange-500 text-center">
               Ready to review
             </div>
-            <div class="flex h-48 w-full border-orange-100 text-orange-300 border items-center justify-center" />
+            <NuxtLink
+              v-if="inReviewReviews.length > 0"
+              :to="`/${params.workspaceSlug}/${params.folderSlug}/${inReviewReviews[0].slug}`"
+              class="flex px-3 h-48 w-full items-center justify-center bg-orange-100"
+            >
+              <i class="pi pi-user-edit" />
+              <span class="ml-2">{{ params.folderSlug }} ({{ inReviewReviews[0].startDate }})</span>
+            </NuxtLink>
+            <div v-else class="flex h-48 w-full border-orange-100 border-4" />
           </div>
         </div>
       </template>

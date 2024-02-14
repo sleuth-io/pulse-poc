@@ -2,6 +2,7 @@
 const route = useRoute('workspaceSlug-folderSlug-reviewSlug')
 const params = route.params
 const db = useDatabase()
+const { currentUser } = useCurrentUser()
 
 const review = db.value.workspaces
   .find(w => w.slug === params.workspaceSlug)!
@@ -18,12 +19,36 @@ function addField() {
 function save(publish = true) {
   if (publish) {
     if (review.status === 'draft')
+      review.status = 'in-progress'
+    else if (review.status === 'in-progress')
       review.status = 'in-review'
-    else
+    else if (review.status === 'in-review')
       review.status = 'completed'
   }
   navigateTo({ name: 'workspaceSlug-folderSlug' })
 }
+
+const moveStatusButtonText = computed(() => {
+  if (review.status === 'draft')
+    return 'Notify reviewers'
+  else if (review.status === 'in-progress')
+    return 'Record metrics'
+  else
+    return 'Finalize review'
+})
+
+const hasPermissionToMoveStatus = computed(() => {
+  return currentUser.value?.role === 'admin' || review.status === 'in-progress'
+})
+
+const moveStatusButtonIcon = computed(() => {
+  if (review.status === 'draft')
+    return 'pi pi-send'
+  else if (review.status === 'in-progress')
+    return 'pi pi-chart-line'
+  else
+    return 'pi pi-check-circle'
+})
 </script>
 
 <template>
@@ -51,7 +76,7 @@ function save(publish = true) {
         >
           <label :for="widget.id" class="text-sm">{{ widget.title }}</label>
           <InputText
-            v-model="review.entry[widget.id]" :disabled="review.status !== 'in-review'"
+            v-model="review.entry[widget.id]" :disabled="review.status === 'completed'"
             class="text-3xl mt-3"
           />
         </div>
@@ -60,7 +85,7 @@ function save(publish = true) {
 
     <template v-if="review.status !== 'completed'">
       <Button label="Save" class="mt-8" icon="pi pi-save" severity="secondary" @click="save(false)" />
-      <Button :label="review.status === 'draft' ? 'Notify reviewers' : 'Record metrics'" class="mt-8 ml-2" icon="pi pi-send" @click="save()" />
+      <Button v-if="hasPermissionToMoveStatus" :label="moveStatusButtonText" class="mt-8 ml-2" :icon="moveStatusButtonIcon" @click="save()" />
     </template>
   </div>
 </template>
