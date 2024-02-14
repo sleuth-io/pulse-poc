@@ -20,10 +20,6 @@ const draftReviews = computed(() =>
   folder.value.reviews.filter(r => r.status === 'draft').sort((a, b) => b.startDate.localeCompare(a.startDate)),
 )
 
-const inReviewReviews = computed(() =>
-  folder.value.reviews.filter(r => r.status === 'in-review').sort((a, b) => b.startDate.localeCompare(a.startDate)),
-)
-
 const inProgressReviews = computed(() =>
   folder.value.reviews.filter(r => r.status === 'in-progress').sort((a, b) => b.startDate.localeCompare(a.startDate)),
 )
@@ -59,11 +55,6 @@ function createDraftFrom(review: ReviewType) {
 
       <ReviewList
         title="In progress" :reviews="inProgressReviews" :workspace-slug="params.workspaceSlug"
-        :folder-slug="params.folderSlug" @create-draft="createDraftFrom"
-      />
-
-      <ReviewList
-        title="Ready to review" :reviews="inReviewReviews" :workspace-slug="params.workspaceSlug"
         :folder-slug="params.folderSlug" @create-draft="createDraftFrom"
       />
 

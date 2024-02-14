@@ -61,8 +61,7 @@ function save(publish = true) {
       }
       review.status = 'in-progress'
     }
-    else if (review.status === 'in-progress') { review.status = 'in-review' }
-    else if (review.status === 'in-review') { review.status = 'completed' }
+    else if (review.status === 'in-progress') { review.status = 'completed' }
   }
   navigateTo({ name: 'workspaceSlug-folderSlug' })
 }
@@ -70,9 +69,7 @@ function save(publish = true) {
 const moveStatusButtonText = computed(() => {
   if (review.status === 'draft')
     return 'Notify reviewers'
-  else if (review.status === 'in-progress')
-    return 'Record metrics'
-  else
+  else // if (review.status === 'in-progress')
     return 'Finalize review'
 })
 
@@ -83,9 +80,7 @@ const hasPermissionToMoveStatus = computed(() => {
 const moveStatusButtonIcon = computed(() => {
   if (review.status === 'draft')
     return 'pi pi-send'
-  else if (review.status === 'in-progress')
-    return 'pi pi-chart-line'
-  else
+  else // if (review.status === 'in-progress')
     return 'pi pi-check-circle'
 })
 </script>

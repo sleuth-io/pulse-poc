@@ -24,7 +24,7 @@ export interface FolderType {
 
 export interface ReviewType {
   recurrence: 'weekly' | 'monthly'
-  status: 'draft' | 'in-progress' | 'in-review' | 'completed'
+  status: 'draft' | 'in-progress' | 'completed'
   startDate: string
   slug: string
   schema: SchemaType[]
@@ -52,9 +52,9 @@ export interface ExistingWidgetType {
 }
 
 interface WidgetDataType {
-  _date: string;
-  _user: number | null;
-  value: number | string | null;
+  _date: string
+  _user: number | null
+  value: number | string | null
 }
 
 export default () =>

@@ -27,7 +27,6 @@ const filteredReviews = computed(() => {
       'bg-green-400': review.status === 'completed',
       'bg-gray-400': review.status === 'draft',
       'bg-yellow-400': review.status === 'in-progress',
-      'bg-orange-400': review.status === 'in-review',
     }"
   >
     <i v-if="review.status === 'draft'" class="pi pi-user-edit" />
