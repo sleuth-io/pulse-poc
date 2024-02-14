@@ -44,8 +44,7 @@ const inProgressReviews = computed(() =>
 function createDraftFrom(review: ReviewType) {
   folder.value.reviews.unshift({
     ...review,
-    status: 'draft',
-    entry: {},
+    status: "draft",
     slug: (Math.random() + 1).toString(36).substring(7),
     startDate: getStartDate(folder.value),
   })

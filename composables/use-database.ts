@@ -1,6 +1,7 @@
 export interface PulseType {
   workspaces: WorkspaceType[]
   users: UserType[]
+  widgets: WidgetsType
 }
 
 export interface UserType {
@@ -27,16 +28,33 @@ export interface ReviewType {
   startDate: string
   slug: string
   schema: SchemaType[]
-  entry: EntryType
 }
 
 interface SchemaType {
-  title: string
-  id: string
+  widgetId: string
 }
 
-interface EntryType {
-  [key: string]: number | string | null
+interface WidgetsType {
+  widgetTypes: WidgetType[]
+  existingWidgets: ExistingWidgetType[]
+}
+
+interface WidgetType {
+  id: string
+  title: string
+  type: 'number' | 'string'
+}
+export interface ExistingWidgetType {
+  id: string
+  title: string
+  widgetTypeId: string
+  data: WidgetDataType[]
+}
+
+interface WidgetDataType {
+  _date: string;
+  _user: number | null;
+  value: number | string | null;
 }
 
 export default () =>
@@ -68,20 +86,12 @@ export default () =>
                 slug: 'weekly-dora-2024-02-12',
                 schema: [
                   {
-                    title: 'MTTR widget',
-                    id: 'mttr-widget',
+                    widgetId: 'mttr-widget-team-1',
                   },
                   {
-                    title: 'Frequency widget',
-                    id: 'frequency-widget',
+                    widgetId: 'frequency-widget-team-1',
                   },
                 ],
-                entry: {
-                  '_date': '2024-02-12',
-                  '_user': 1,
-                  'mttr-widget': 1,
-                  'frequency-widget': 2,
-                },
               },
               {
                 recurrence: 'weekly',
@@ -90,20 +100,12 @@ export default () =>
                 slug: 'weekly-dora-2024-02-05',
                 schema: [
                   {
-                    title: 'MTTR widget',
-                    id: 'mttr-widget',
+                    widgetId: 'mttr-widget-team-1',
                   },
                   {
-                    title: 'Frequency widget',
-                    id: 'frequency-widget',
+                    widgetId: 'frequency-widget-team-1',
                   },
                 ],
-                entry: {
-                  '_date': '2024-02-05',
-                  '_user': 1,
-                  'mttr-widget': 1,
-                  'frequency-widget': 2,
-                },
               },
               {
                 recurrence: 'weekly',
@@ -112,20 +114,12 @@ export default () =>
                 slug: 'weekly-dora-2024-01-15',
                 schema: [
                   {
-                    title: 'MTTR widget',
-                    id: 'mttr-widget',
+                    widgetId: 'mttr-widget-team-1',
                   },
                   {
-                    title: 'Frequency widget',
-                    id: 'frequency-widget',
+                    widgetId: 'frequency-widget-team-1',
                   },
                 ],
-                entry: {
-                  '_date': '2024-01-15',
-                  '_user': 1,
-                  'mttr-widget': 1,
-                  'frequency-widget': 2,
-                },
               },
               {
                 recurrence: 'weekly',
@@ -134,20 +128,12 @@ export default () =>
                 slug: 'weekly-dora-2024-01-22',
                 schema: [
                   {
-                    title: 'MTTR widget',
-                    id: 'mttr-widget',
+                    widgetId: 'mttr-widget-team-1',
                   },
                   {
-                    title: 'Frequency widget',
-                    id: 'frequency-widget',
+                    widgetId: 'frequency-widget-team-1',
                   },
                 ],
-                entry: {
-                  '_date': '2024-01-22',
-                  '_user': 1,
-                  'mttr-widget': 10,
-                  'frequency-widget': 5,
-                },
               },
               {
                 recurrence: 'weekly',
@@ -156,20 +142,12 @@ export default () =>
                 slug: 'weekly-dora-2024-01-29',
                 schema: [
                   {
-                    title: 'MTTR widget',
-                    id: 'mttr-widget',
+                    widgetId: 'mttr-widget-team-1',
                   },
                   {
-                    title: 'Frequency widget',
-                    id: 'frequency-widget',
+                    widgetId: 'frequency-widget-team-1',
                   },
                 ],
-                entry: {
-                  '_date': '2024-01-29',
-                  '_user': 1,
-                  'mttr-widget': 3,
-                  'frequency-widget': 4,
-                },
               },
             ],
           },
@@ -185,19 +163,113 @@ export default () =>
                 slug: 'monthly-devex',
                 schema: [
                   {
-                    title: 'Potato',
-                    id: 'potato',
+                    widgetId: 'potato-widget-1',
                   },
                   {
-                    title: 'Tomato',
-                    id: 'tomato',
+                    widgetId: 'tomato-widget-1',
                   },
                 ],
-                entry: {},
               },
             ],
           },
         ],
       },
     ],
+    widgets: {
+      widgetTypes: [
+        {
+          id: 'mttr',
+          title: 'MTTR',
+          type: 'number',
+        },
+        {
+          id: 'frequency',
+          title: 'Frequency',
+          type: 'number',
+        },
+        {
+          id: 'number',
+          title: 'Number',
+          type: 'number',
+        },
+      ],
+      existingWidgets: [
+        {
+          id: 'mttr-widget-team-1',
+          title: 'MTTR for team 1',
+          widgetTypeId: 'mttr',
+          data: [
+            {
+              _date: '2024-01-15',
+              _user: 1,
+              value: 3,
+            },
+            {
+              _date: '2024-01-22',
+              _user: 1,
+              value: 2,
+            },
+            {
+              _date: '2024-01-29',
+              _user: 1,
+              value: 1,
+            },
+            {
+              _date: '2024-02-05',
+              _user: 1,
+              value: 3,
+            },
+            {
+              _date: '2024-02-12',
+              _user: 1,
+              value: 5,
+            },
+          ],
+        },
+        {
+          id: 'frequency-widget-team-1',
+          title: 'Frequency for team 1',
+          widgetTypeId: 'frequency',
+          data: [
+            {
+              _date: '2024-01-15',
+              _user: 1,
+              value: 2,
+            },
+            {
+              _date: '2024-01-22',
+              _user: 1,
+              value: 4,
+            },
+            {
+              _date: '2024-01-29',
+              _user: 1,
+              value: 5,
+            },
+            {
+              _date: '2024-02-05',
+              _user: 1,
+              value: 2,
+            },
+            {
+              _date: '2024-02-12',
+              _user: 1,
+              value: 7,
+            },
+          ],
+        },
+        {
+          id: 'potato-widget-1',
+          title: 'Potato',
+          widgetTypeId: 'number',
+          data: [],
+        },
+        {
+          id: 'tomato-widget-1',
+          title: 'Tomato',
+          widgetTypeId: 'number',
+          data: [],
+        },
+      ],
+    },
   }))
