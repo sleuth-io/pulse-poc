@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import type {
+  ExistingWidgetType,
+  ReviewType,
+} from '~/composables/use-database'
+
 const route = useRoute('workspaceSlug-folderSlug-_create')
 const db = useDatabase()
 
@@ -7,19 +12,25 @@ const folder = db.value.workspaces.find(w => w.slug === route.params.workspaceSl
 const review = ref<ReviewType>({
   recurrence: 'monthly',
   startDate: getStartDate(folder),
-  entry: {},
-  schema: [
-    {
-      id: 'new-widget',
-      title: 'New widget',
-    },
-  ],
+  schema: [],
   slug: `${route.params.folderSlug}-${getStartDate(folder)}`,
   status: 'draft',
 })
 
+const widgetList = ref<ExistingWidgetType[]>([])
+
+function createNewWidget(): ExistingWidgetType {
+  return {
+    id: (Math.random() + 1).toString(36).substring(7),
+    title: 'New widget',
+    widgetTypeId: 'number',
+    data: [],
+  }
+}
+
 function createReview() {
   folder?.reviews.push(review.value)
+  db.value.widgets.existingWidgets.push(...widgetList.value)
 
   navigateTo({
     name: 'workspaceSlug-folderSlug',
@@ -27,11 +38,12 @@ function createReview() {
   })
 }
 
-function addField() {
+function addWidget() {
+  const newWidget = createNewWidget()
   review.value.schema.push({
-    title: 'New widget',
-    id: (Math.random() + 1).toString(36).substring(7),
+    widgetId: newWidget.id,
   })
+  widgetList.value.push(newWidget)
 }
 </script>
 
@@ -47,12 +59,17 @@ function addField() {
     </div>
 
     <Divider />
-    <Card v-for="(field, i) in review.schema" :key="i" class="mb-4">
+    <Card v-for="widget in widgetList" :key="widget.id" class="mb-4">
       <template #content>
-        <InputText v-model="field.title" />
+        <InputText v-model="widget.title" />
       </template>
     </Card>
-    <Button label="Add field" icon="pi pi-plus" severity="secondary" @click="addField" />
+    <Button
+      label="Add widget"
+      icon="pi pi-plus"
+      severity="secondary"
+      @click="addWidget"
+    />
     <Divider />
     <Button label="Create" icon="pi pi-save" @click="createReview" />
   </div>

@@ -44,8 +44,7 @@ interface WidgetType {
   title: string
   type: 'number' | 'string'
 }
-
-interface ExistingWidgetType {
+export interface ExistingWidgetType {
   id: string
   title: string
   widgetTypeId: string
