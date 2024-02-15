@@ -19,15 +19,6 @@ const review = ref<ReviewType>({
 
 const widgetList = ref<ExistingWidgetType[]>([])
 
-function createNewWidget(): ExistingWidgetType {
-  return {
-    id: (Math.random() + 1).toString(36).substring(7),
-    title: 'New widget',
-    widgetTypeId: 'number',
-    data: [],
-  }
-}
-
 function createReview() {
   folder?.reviews.push(review.value)
   db.value.widgets.existingWidgets.push(...widgetList.value)
@@ -38,13 +29,34 @@ function createReview() {
   })
 }
 
-function addWidget() {
-  const newWidget = createNewWidget()
+function createNewWidget(type: string, title = ''): ExistingWidgetType {
+  return {
+    id: (Math.random() + 1).toString(36).substring(7),
+    title: `New ${title} widget`,
+    widgetTypeId: type,
+    data: [],
+  }
+}
+
+function addWidget(type: string, title: string) {
+  const newWidget = createNewWidget(type, title)
   review.value.schema.push({
     widgetId: newWidget.id,
   })
   widgetList.value.push(newWidget)
 }
+
+const widgetMenu = ref()
+function toggle(e: Event) {
+  widgetMenu.value.toggle(e)
+}
+
+const widgetMenuItems = db.value.widgets.widgetTypes.map(w => ({
+  label: w.title,
+  value: w.id,
+  existingWidget: false,
+  command: ({ item }) => addWidget(item.value, item.label),
+}))
 </script>
 
 <template>
@@ -65,11 +77,15 @@ function addWidget() {
       </template>
     </Card>
     <Button
+      type="button"
       label="Add widget"
       icon="pi pi-plus"
       severity="secondary"
-      @click="addWidget"
+      aria-haspopup="true"
+      aria-controls="overlay_menu"
+      @click="toggle"
     />
+    <Menu id="overlay_menu" ref="widgetMenu" :model="widgetMenuItems" :popup="true" />
     <Divider />
     <Button label="Create" icon="pi pi-save" @click="createReview" />
   </div>
