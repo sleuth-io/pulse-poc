@@ -40,22 +40,52 @@ const tempWidgetValues = reviewWidgets.reduce(
 
 const newWidgetsList = ref<ExistingWidgetType[]>([])
 
-function createNewWidget(): ExistingWidgetType {
+function createNewWidget(type: string, title = ''): ExistingWidgetType {
   return {
     id: (Math.random() + 1).toString(36).substring(7),
-    title: 'New widget',
-    widgetTypeId: 'number',
+    title: `New ${title} widget`,
+    widgetTypeId: type,
     data: [],
   }
 }
 
-function addWidget() {
-  const newWidget = createNewWidget()
-  review.schema.push({
-    widgetId: newWidget.id,
-  })
-  newWidgetsList.value.push(newWidget)
+function addWidget(widget: ExistingWidgetType, isExistingWidget: boolean) {
+  if (isExistingWidget) {
+    review.schema.push({
+      widgetId: widget.id,
+    })
+    newWidgetsList.value.push({ ...widget, disabled: true })
+  }
+  else {
+    const newWidget = createNewWidget(widget.widgetTypeId, widget.title)
+    review.schema.push({
+      widgetId: newWidget.id,
+    })
+    newWidgetsList.value.push(newWidget)
+    db.value.widgets.existingWidgets.push(...newWidgetsList.value)
+  }
 }
+
+const widgetMenu = ref()
+function toggle(e: Event) {
+  widgetMenu.value.toggle(e)
+}
+
+const widgetMenuItems = computed(() => [{
+  label: 'Empty widgets',
+  items: db.value.widgets.widgetTypes.map(w => ({
+    label: w.title,
+    command: () => addWidget(w, false),
+  })),
+}, {
+  label: 'Existing widgets',
+  items: db.value.widgets.existingWidgets.filter((w) => {
+    return !review.schema.some(s => s.widgetId === w.id)
+  }).map(w => ({
+    label: w.title,
+    command: () => addWidget(w, true),
+  })),
+}])
 
 function save(publish = true) {
   if (newWidgetsList.value.length)
@@ -118,16 +148,25 @@ const moveStatusButtonIcon = computed(() => {
           class="mt-4"
         >
           <template #content>
-            <InputText v-model="widget.title" />
+            <InputText v-model="widget.title" :disabled="widget.disabled" />
           </template>
         </Card>
         <Button
+          type="button"
           label="Add widget"
           icon="pi pi-plus"
-          class="mt-8"
           severity="secondary"
-          @click="addWidget"
+          aria-haspopup="true"
+          aria-controls="overlay_menu"
+          @click="toggle"
         />
+        <Menu id="overlay_menu" ref="widgetMenu" :model="widgetMenuItems" :popup="true">
+          <template #submenuheader="{ item }">
+            <div class="text-primary font-bold border-b">
+              {{ item.label }}
+            </div>
+          </template>
+        </Menu>
         <hr class="mt-8">
       </div>
       <div v-else class="mt-6 flex">
