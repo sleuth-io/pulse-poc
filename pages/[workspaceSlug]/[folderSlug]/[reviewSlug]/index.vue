@@ -20,8 +20,14 @@ function getWidgetData(widgetId: string) {
 
 function updateWidgetValue(widgetId: string, value: string) {
   const data = getWidgetData(widgetId)
-  if (data)
-    data.value = value
+  if (data) { data.value = value }
+  else {
+    reviewWidgets.find(w => w.id === widgetId)!.data.push({
+      _date: review.startDate,
+      _user: 1,
+      value,
+    })
+  }
 }
 
 const tempWidgetValues = reviewWidgets.reduce(
