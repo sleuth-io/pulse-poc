@@ -13,9 +13,20 @@ const reviewWidgets = db.value.widgets.existingWidgets.filter(w =>
   review.schema.some(s => s.widgetId === w.id),
 )
 
+function getWidgetData(widgetId: string) {
+  const data = reviewWidgets.find(w => w.id === widgetId)!.data
+  return data.find(d => d._date === review.startDate)
+}
+
+function updateWidgetValue(widgetId: string, value: string) {
+  const data = getWidgetData(widgetId)
+  if (data)
+    data.value = value
+}
+
 const tempWidgetValues = reviewWidgets.reduce(
   (acc, w) => {
-    acc[w.id] = w.data.find(d => d._date === review.startDate)?.value || ''
+    acc[w.id] = getWidgetData(w.id)?.value ?? ''
     return acc
   },
   {} as Record<string, string>,
@@ -121,9 +132,10 @@ const moveStatusButtonIcon = computed(() => {
         >
           <label :for="widget.id" class="text-sm">{{ widget.title }}</label>
           <InputText
-            v-model="tempWidgetValues[widget.id]"
+            :model-value="getWidgetData(widget.id)?.value"
             :disabled="review.status === 'completed'"
             class="text-3xl mt-3"
+            @update:model-value="(v) => updateWidgetValue(widget.id, v)"
           />
         </div>
       </div>

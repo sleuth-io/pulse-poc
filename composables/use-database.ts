@@ -159,7 +159,7 @@ export default () =>
               {
                 recurrence: 'monthly',
                 status: 'draft',
-                startDate: '2024-01-01',
+                startDate: '2024-02-05',
                 slug: 'monthly-devex',
                 schema: [
                   {
@@ -167,6 +167,12 @@ export default () =>
                   },
                   {
                     widgetId: 'tomato-widget-1',
+                  },
+                  {
+                    widgetId: 'mttr-widget-team-1',
+                  },
+                  {
+                    widgetId: 'frequency-widget-team-1',
                   },
                 ],
               },
@@ -214,11 +220,11 @@ export default () =>
               _user: 1,
               value: 1,
             },
-            {
-              _date: '2024-02-05',
-              _user: 1,
-              value: 3,
-            },
+            // {
+            //   _date: '2024-02-05',
+            //   _user: 1,
+            //   value: 3,
+            // },
             {
               _date: '2024-02-12',
               _user: 1,
@@ -246,11 +252,11 @@ export default () =>
               _user: 1,
               value: 5,
             },
-            {
-              _date: '2024-02-05',
-              _user: 1,
-              value: 2,
-            },
+            // {
+            //   _date: '2024-02-05',
+            //   _user: 1,
+            //   value: 2,
+            // },
             {
               _date: '2024-02-12',
               _user: 1,
