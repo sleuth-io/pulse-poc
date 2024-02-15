@@ -41,7 +41,7 @@ function addWidget(widget: ExistingWidgetType, isExistingWidget: boolean) {
     review.value.schema.push({
       widgetId: widget.id,
     })
-    widgetList.value.push(widget)
+    widgetList.value.push({ ...widget, disabled: true })
   }
   else {
     const newWidget = createNewWidget(widget.widgetTypeId, widget.title)
@@ -87,7 +87,7 @@ const widgetMenuItems = [{
     <Divider />
     <Card v-for="widget in widgetList" :key="widget.id" class="mb-4">
       <template #content>
-        <InputText v-model="widget.title" />
+        <InputText v-model="widget.title" :disabled="widget.disabled" />
       </template>
     </Card>
     <Button
@@ -101,7 +101,9 @@ const widgetMenuItems = [{
     />
     <Menu id="overlay_menu" ref="widgetMenu" :model="widgetMenuItems" :popup="true">
       <template #submenuheader="{ item }">
-        <div class="text-primary font-bold border-b">{{ item.label }}</div>
+        <div class="text-primary font-bold border-b">
+          {{ item.label }}
+        </div>
       </template>
     </Menu>
     <Divider />
