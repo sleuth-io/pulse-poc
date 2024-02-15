@@ -21,8 +21,6 @@ const widgetList = ref<ExistingWidgetType[]>([])
 
 function createReview() {
   folder?.reviews.push(review.value)
-  db.value.widgets.existingWidgets.push(...widgetList.value)
-
   navigateTo({
     name: 'workspaceSlug-folderSlug',
     params: route.params,
@@ -38,12 +36,21 @@ function createNewWidget(type: string, title = ''): ExistingWidgetType {
   }
 }
 
-function addWidget(type: string, title: string) {
-  const newWidget = createNewWidget(type, title)
-  review.value.schema.push({
-    widgetId: newWidget.id,
-  })
-  widgetList.value.push(newWidget)
+function addWidget(widget: ExistingWidgetType, isExistingWidget: boolean) {
+  if (isExistingWidget) {
+    review.value.schema.push({
+      widgetId: widget.id,
+    })
+    widgetList.value.push(widget)
+  }
+  else {
+    const newWidget = createNewWidget(widget.widgetTypeId, widget.title)
+    review.value.schema.push({
+      widgetId: newWidget.id,
+    })
+    widgetList.value.push(newWidget)
+    db.value.widgets.existingWidgets.push(...widgetList.value)
+  }
 }
 
 const widgetMenu = ref()
@@ -51,12 +58,19 @@ function toggle(e: Event) {
   widgetMenu.value.toggle(e)
 }
 
-const widgetMenuItems = db.value.widgets.widgetTypes.map(w => ({
-  label: w.title,
-  value: w.id,
-  existingWidget: false,
-  command: ({ item }) => addWidget(item.value, item.label),
-}))
+const widgetMenuItems = [{
+  label: 'Empty widgets',
+  items: db.value.widgets.widgetTypes.map(w => ({
+    label: w.title,
+    command: () => addWidget(w, false),
+  })),
+}, {
+  label: 'Existing widgets',
+  items: db.value.widgets.existingWidgets.map(w => ({
+    label: w.title,
+    command: () => addWidget(w, true),
+  })),
+}]
 </script>
 
 <template>
@@ -85,7 +99,11 @@ const widgetMenuItems = db.value.widgets.widgetTypes.map(w => ({
       aria-controls="overlay_menu"
       @click="toggle"
     />
-    <Menu id="overlay_menu" ref="widgetMenu" :model="widgetMenuItems" :popup="true" />
+    <Menu id="overlay_menu" ref="widgetMenu" :model="widgetMenuItems" :popup="true">
+      <template #submenuheader="{ item }">
+        <div class="text-primary font-bold border-b">{{ item.label }}</div>
+      </template>
+    </Menu>
     <Divider />
     <Button label="Create" icon="pi pi-save" @click="createReview" />
   </div>
