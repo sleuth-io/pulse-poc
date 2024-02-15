@@ -45,9 +45,16 @@ const [admin, user] = db.value.users
       <i class="pi pi-database mr-2" />Database
     </NuxtLink>
     <div>Viewing as:</div>
-    <div class="flex gap-4">
-      <Button label="Admin" plain :disabled="admin === currentUser" @click="setCurrentUser(admin)" />
-      <Button label="User" plain :disabled="user === currentUser" @click="setCurrentUser(user)" />
-    </div>
+    <SelectButton
+      :model-value="currentUser"
+      :options="[
+        { label: 'Admin', value: admin },
+        { label: 'User', value: user },
+      ]"
+      option-label="label"
+      option-value="value"
+      :allow-empty="false"
+      @change="$event => setCurrentUser($event.value)"
+    />
   </div>
 </template>
