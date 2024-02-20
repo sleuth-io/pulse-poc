@@ -41,10 +41,7 @@ const [admin, user] = db.value.users
         </li>
       </ul>
     </div>
-    <NuxtLink to="/database" class="mt-auto opacity-30 text-sm">
-      <i class="pi pi-database mr-2" />Database
-    </NuxtLink>
-    <div>Viewing as:</div>
+    <div class="mt-auto">Viewing as:</div>
     <SelectButton
       :model-value="currentUser"
       :options="[

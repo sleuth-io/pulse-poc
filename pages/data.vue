@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-1">
-    <ReviewSidebar />
+    <DataSidebar />
     <div class="flex-1 py-4 px-8">
       <NuxtPage />
     </div>

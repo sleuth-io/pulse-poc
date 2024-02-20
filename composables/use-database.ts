@@ -51,7 +51,7 @@ export interface ExistingWidgetType {
   data: WidgetDataType[]
 }
 
-interface WidgetDataType {
+export interface WidgetDataType {
   _date: string
   _user: number | null
   value: number | string | null
