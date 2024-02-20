@@ -72,13 +72,13 @@ function toggle(e: Event) {
 }
 
 const widgetMenuItems = computed(() => [{
-  label: 'Empty widgets',
+  label: 'New widgets',
   items: db.value.widgets.widgetTypes.map(w => ({
     label: w.title,
     command: () => addWidget(w, false),
   })),
 }, {
-  label: 'Existing widgets',
+  label: 'Configured widgets',
   items: db.value.widgets.existingWidgets.filter((w) => {
     return !review.schema.some(s => s.widgetId === w.id)
   }).map(w => ({
