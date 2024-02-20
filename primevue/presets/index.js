@@ -37,6 +37,7 @@ import avatar from './avatar/index.js'
 import badge from './badge/index.js'
 import badgedirective from './badgedirective/index.js'
 import tag from './tag/index.js'
+import datatable from './datatable/index.js'
 
 export default {
   global,
@@ -44,6 +45,7 @@ export default {
     tooltip,
     badgedirective,
   },
+  datatable,
   autocomplete,
   checkbox,
   dropdown,

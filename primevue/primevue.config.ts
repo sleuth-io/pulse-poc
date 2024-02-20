@@ -43,6 +43,8 @@ export default {
       'Avatar',
       'Badge',
       'Tag',
+      'DataTable',
+      'Column',
     ],
   },
 }
