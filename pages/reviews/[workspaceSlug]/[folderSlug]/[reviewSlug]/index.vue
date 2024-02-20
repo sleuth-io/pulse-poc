@@ -151,7 +151,7 @@ const moveStatusButtonIcon = computed(() => {
             <InputText v-model="widget.title" :disabled="widget.disabled" />
             <Accordion class="mt-2">
               <AccordionTab header="PQL query config">
-                <InputText :model-value="`pql: ${widget.title.toLowerCase().replaceAll(' ', '-')};`" :disabled="true" />
+                <InputText :model-value="`${widget.disabled ? `pql: ${widget.title.toLowerCase().replaceAll(' ', '-')};` : ''}`" :disabled="widget.disabled" />
               </AccordionTab>
             </Accordion>
           </template>
