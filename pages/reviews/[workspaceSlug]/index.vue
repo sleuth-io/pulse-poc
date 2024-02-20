@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const route = useRoute('workspaceSlug')
+const route = useRoute('reviews-workspaceSlug')
 const params = route.params
 const db = useDatabase()
 const { currentUser } = useCurrentUser()
@@ -17,7 +17,7 @@ const { currentUser } = useCurrentUser()
           (w) => w.slug === params.workspaceSlug,
         )!.folders"
         :key="folder.slug"
-        :to="`/${params.workspaceSlug}/${folder.slug}`"
+        :to="`/reviews/${params.workspaceSlug}/${folder.slug}`"
         class="flex bg-gray-400 px-3 h-48 w-64 items-center justify-center"
       >
         <i class="pi pi-folder mr-2" />
@@ -25,7 +25,7 @@ const { currentUser } = useCurrentUser()
       </NuxtLink>
       <NuxtLink
         v-if="currentUser?.role === 'admin'"
-        :to="`/${params.workspaceSlug}/_create`"
+        :to="`/reviews/${params.workspaceSlug}/_create`"
         class="flex bg-gray-200 px-3 h-48 w-64 items-center justify-center"
       >
         <i class="pi pi-plus mr-2" />

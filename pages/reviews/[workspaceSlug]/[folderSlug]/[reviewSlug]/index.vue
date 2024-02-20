@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const route = useRoute('workspaceSlug-folderSlug-reviewSlug')
+const route = useRoute('reviews-workspaceSlug-folderSlug-reviewSlug')
 const params = route.params
 const db = useDatabase()
 const { currentUser } = useCurrentUser()

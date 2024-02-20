@@ -4,7 +4,7 @@ import type {
   ReviewType,
 } from '~/composables/use-database'
 
-const route = useRoute('workspaceSlug-folderSlug-_create')
+const route = useRoute('reviews-workspaceSlug-folderSlug-_create')
 const db = useDatabase()
 
 const folder = db.value.workspaces.find(w => w.slug === route.params.workspaceSlug)?.folders.find(f => f.slug === route.params.folderSlug)
@@ -22,7 +22,7 @@ const widgetList = ref<ExistingWidgetType[]>([])
 function createReview() {
   folder?.reviews.push(review.value)
   navigateTo({
-    name: 'workspaceSlug-folderSlug',
+    name: 'reviews-workspaceSlug-folderSlug',
     params: route.params,
   })
 }

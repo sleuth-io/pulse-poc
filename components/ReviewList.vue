@@ -22,7 +22,7 @@ const filteredReviews = computed(() => {
   <NuxtLink
     v-for="review in filteredReviews"
     :key="review.slug"
-    :to="`/${workspaceSlug}/${folderSlug}/${review.slug}`"
+    :to="`/reviews/${workspaceSlug}/${folderSlug}/${review.slug}`"
     class="flex px-3 h-12 items-center justify-start relative" :class="{
       'bg-green-400': review.status === 'completed',
       'bg-gray-400': review.status === 'draft',

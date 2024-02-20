@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ReviewType } from '~/composables/use-database'
 
-const route = useRoute('workspaceSlug-folderSlug')
+const route = useRoute('reviews-workspaceSlug-folderSlug')
 const params = route.params
 const db = useDatabase()
 const { currentUser } = useCurrentUser()
@@ -46,7 +46,7 @@ function createDraftFrom(review: ReviewType) {
       />
       <NuxtLink
         v-if="currentUser?.role === 'admin'"
-        :to="`/${params.workspaceSlug}/${params.folderSlug}/_create`"
+        :to="`/reviews/${params.workspaceSlug}/${params.folderSlug}/_create`"
         class="flex px-3 h-12 items-center justify-center bg-gray-100"
       >
         <i class="pi pi-plus mr-2" />

@@ -16,7 +16,7 @@ const [admin, user] = db.value.users
       <ul>
         <li v-for="workspace in db.workspaces" :key="workspace.name">
           <NuxtLink
-            :to="`/${workspace.slug}`"
+            :to="`/reviews/${workspace.slug}`"
             class="block py-3"
             active-class="text-underline"
           >
@@ -29,7 +29,7 @@ const [admin, user] = db.value.users
               class="pl-2"
             >
               <NuxtLink
-                :to="`/${workspace.slug}/${folder.slug}`"
+                :to="`/reviews/${workspace.slug}/${folder.slug}`"
                 class="block py-1"
                 active-class="text-underline"
               >
@@ -41,7 +41,7 @@ const [admin, user] = db.value.users
         </li>
       </ul>
     </div>
-    <NuxtLink to="/database" class="mt-auto">
+    <NuxtLink to="/database" class="mt-auto opacity-30 text-sm">
       <i class="pi pi-database mr-2" />Database
     </NuxtLink>
     <div>Viewing as:</div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const route = useRoute('workspaceSlug-_create')
+const route = useRoute('reviews-workspaceSlug-_create')
 const folderName = ref('')
 const db = useDatabase()
 const workspace = db.value.workspaces.find(w => w.slug === route.params.workspaceSlug)!
