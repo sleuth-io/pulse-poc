@@ -8,6 +8,7 @@ export default {
     include: [
       'Autocomplete',
       'Accordion',
+      'AccordionTab',
       'Checkbox',
       'Dropdown',
       'InputGroup',

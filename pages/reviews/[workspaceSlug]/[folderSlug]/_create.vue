@@ -90,6 +90,11 @@ const widgetMenuItems = computed(() => [{
     <Card v-for="widget in widgetList" :key="widget.id" class="mb-4">
       <template #content>
         <InputText v-model="widget.title" :disabled="widget.disabled" />
+        <Accordion class="mt-2">
+          <AccordionTab header="PQL query config">
+            <InputText :model-value="`pql:${widget.title.toLowerCase()}; dont-know-how-this-will-look`" :disabled="true" />
+          </AccordionTab>
+        </Accordion>
       </template>
     </Card>
     <Button
